@@ -1,0 +1,32 @@
+主要函数overridePendingTransition(R.anim.in,R.anim.out)
+
+第一个参数表示新的activity切入的动画，第二参数表示旧的activity切出的动画。
+很多博客提到此函数一定要在startActivity和finish方法之后调用。
+实际上要真的起作用应该放在新的activity里，具体位置如下
+
+protected void onCreate(Bundle savedInstanceState) {
+        overridePendingTransition(R.anim.slide_right_in_animation, R.anim.slide_left_out_animation);//activity切换动画
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.mainpage);
+}
+
+两个XML文件如下
+
+R.anim.slede_right_in_animation
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<translate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="1000"
+    android:fromXDelta="100.0%"
+    android:fromYDelta="0.0%"
+    android:toXDelta="0.0%"
+    android:toYDelta="0.0%" />
+
+R.anim.slede_left_out_animation
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<translate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="1000"
+    android:fromXDelta="0.0%"
+    android:fromYDelta="0.0%"
+    android:toXDelta="-100.0%"
+    android:toYDelta="0.0%" />
+
