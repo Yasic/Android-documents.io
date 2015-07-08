@@ -1,0 +1,35 @@
+类似知乎toolbar上的菜单按钮，在drawer拉出和拉入时up符号与back符号互换
+
+实现步骤如下
+1.在xml文件里加入android.support.v7.widget.Toolbar控件
+<android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_height="48dp"
+        android:layout_width="match_parent"/>
+<android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawerlayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>
+
+2.在 activity文件中加入代码
+
+ private DrawerLayout mDrawerLayout;
+ private ActionBarDrawerToggle mDrawerToggle;
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.mainpage);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.inflateMenu(R.menu.menu_main);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
+        // 實作 drawer toggle 並放入 toolbar
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar,R.string.drawer_open,R.string.drawer_close);
+        mDrawerToggle.syncState();
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+  }
+注意class应extends ActinBarActivity,toolbar也应该包含v7包里的toolbar，否则会出错。
