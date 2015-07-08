@@ -1,6 +1,7 @@
-类似知乎toolbar上的菜单按钮，在drawer拉出和拉入时up符号与back符号互换
+类似知乎toolbar上的“drawer toggle”按钮，在drawer拉出和拉入时up符号与back符号互换;
+最新发布的知乎改成了drawer覆盖toolbar，但是toggle按钮的动画依然存在
 
-实现步骤如下
+toggle动画实现步骤如下
 1.在xml文件里加入android.support.v7.widget.Toolbar控件
 <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -33,3 +34,4 @@
         mDrawerLayout.setDrawerListener(mDrawerToggle);
   }
 注意class应extends ActinBarActivity,toolbar也应该包含v7包里的toolbar，否则会出错。
+
