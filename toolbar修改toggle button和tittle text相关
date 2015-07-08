@@ -1,0 +1,42 @@
+主要目的：修改toolbar中的toggle button和tittle text颜色
+
+主要步骤如下：
+1.在style文件中自定义toolbar风格、toggle button、tittle text风格
+<style name="AppTheme.Toolbar" parent="AppTheme">
+        <!--隐藏ActionBar-->
+        <item name="windowActionBar">false</item>
+        <!--改变toggle button的样式-->
+        <item name="drawerArrowStyle">@style/MyAppDrawerArrowStyle</item>
+    </style>
+    
+<!--toggle button样式-->
+    <style name="MyAppDrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <!--改变汉堡包颜色为白色-->
+        <item name="color">@android:color/white</item>
+    </style>
+    
+<!--tittle text样式-->
+    <style name="MyTitleTextStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <!--把文字颜色改为白色-->
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+如果在AppTheme.Toolbar中直接修改titletextstyle会产生奇怪效果、原因不明
+
+2.Manifest文件中修改activity theme为AppTheme.Toolbar
+<activity
+            android:name=".Mainpage"
+            android:theme="@style/AppTheme.Toolbar"
+/>
+
+3.layout文件中，加入v7.Toolbar
+<android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_height="48dp"
+                android:layout_width="match_parent"
+                android:background="#00ccff"
+                app:titleTextAppearance="@style/MyTitleTextStyle"
+                android:minHeight="?attr/actionBarSize"/>
+            <!-- 字体风格必须在这里重新设置才能生效 -->
+将v7.Toolbar加入到drawerlayout里可以实现“drawerlayout覆盖toolbar”效果
+
+4.代码中联系drawer和toolbar
