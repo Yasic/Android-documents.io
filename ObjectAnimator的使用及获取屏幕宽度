@@ -1,0 +1,31 @@
+一、
+Android的动画效果主要通过三种方式：
+View Animation（Tween Animation）补间动画、
+Drawable Animation（Frame Animation）帧动画、
+Property Animation属性动画、
+
+ObjectAnimator继承自ValueAnimator，而ValueAnimator包含了Property Animation动画的所有核心功能，
+如动画时间，开始、结束属性值，相应时间属性值计算方法等
+这里举一个例子，利用ObjectAnimator实现控件的平移动画。
+
+public void objectanimation(){
+        ObjectAnimator objectanimator = ObjectAnimator.ofFloat(jinyilogo, "translationX", -screenWidth-10.0f, 0.0f);
+        objectanimator.setDuration(1500);
+        objectanimator.setInterpolator(new AccelerateDecelerateInterpolator());
+        objectanimator.start();
+    }
+    
+可以看出ObjectAnimator实现方法简单，步骤为
+1.创建ObjectAnimator对象，与需要操控的控件绑定，指明动画属性和变化范围
+2.设置动画持续时间
+3.设定Interpolator(可以缺省)
+4.开始动画
+
+二、
+对于平移而言，很多时候需要获取到屏幕的宽度screenWidth，具体方法如下
+DisplayMetrics metrics = new DisplayMetrics();
+MainActivity.this.getWindowManager().getDefaultDisplay().getMetrics(metrics);//初始化
+screenWidth = metrics.widthPixels;//获取屏幕宽度
+screenHeight = metrics.heightPixels;//获取屏幕高度
+
+displaymetrics可以获取到屏幕很多属性，具体参见http://developer.android.com/reference/android/util/DisplayMetrics.html
