@@ -1,0 +1,21 @@
+在使用drawerlayout时遇到了一个问题，当dawerlayout里面加入了非listview的布局时，会发生“事件穿透”问题。
+具体来说就是对drawerlayout里的布局进行操作，会直接控制到底层content。
+可能原因是在这些加入的布局里，并未得到点击事件的焦点和处理，所以穿透到了底层。
+
+解决方法：
+<LinearLayout
+    android:layout_height="167dp"
+    android:layout_width="match_parent"
+    android:clickable="true"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingTop="15dp"
+    android:paddingBottom="15dp"
+    android:background="@drawable/material_design_background">
+</LinearLayout>
+在引入的布局或者添加的非listview里加入android:clickable="true"即可
+
+以下解决方法已证明无效：
+1.用textview占满空余地方（除非类似listview或者button之类元件可以达到目的）
+2.添加scrollview（由于元素多于1个，scrollview不能成功添加）
+3.用ImageView填充（除非是ImageButton可达到目的）
