@@ -1,0 +1,7 @@
+阴影效果是布局中一项重要属性、今天先记录一下字体阴影效果的添加，日后再详细记录有关shape的众多用法
+
+android:textScaleX="1.2"//字体间距
+android:shadowColor="#ff212121"//阴影颜色
+android:shadowDx="1"//阴影水平分量，负数向左，正数向右
+android:shadowDy="1"//阴影竖直分量，负数向左，正数向右
+android:shadowRadius="1"//阴影半径、值越大阴影越明显
