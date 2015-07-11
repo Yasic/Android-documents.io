@@ -1,0 +1,30 @@
+java中的计时器工具timertask和timer在android中国有很好的控制作用。
+
+使用方法如下：
+
+Timer timer = new Timer(true);//true 说明这个timer以daemon方式运行（优先级低，程序结束timer也自动结束）   
+TimerTask timerTask = new TimerTask() {
+    @Override
+   	public void run() {
+        Intent intent = new Intent(Login.this,MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+};
+timer.schedule(timerTask,1000);
+
+schedule方法有三个参数
+第一个参数就是TimerTask类型的对象，我们实现TimerTask的run()方法就是要周期执行的一个任务；
+第二个参数有两种类型，第一种是long类型，表示多长时间后开始执行，另一种是Date类型，表示从那个时间后开始执行；
+第三个参数就是执行的周期，为long类型。
+
+以下是几种调度task的方法：
+1.time为Date类型：在指定时间执行一次。  
+timer.schedule(task, time);  
+2.firstTime为Date类型,period为long，表示从firstTime时刻开始，每隔period毫秒执行一次。  
+timer.schedule(task, firstTime, period);     
+3.delay 为long类型：从现在起过delay毫秒执行一次。  
+timer.schedule(task, delay);  
+4.delay为long,period为long：从现在起过delay毫秒以后，每隔period毫秒执行一次。  
+timer.schedule(task, delay, period);  
+
