@@ -1,0 +1,19 @@
+今天实在太累了、就少写一些吧、明天考试结束、可以多写些东西了。
+预计将会先解决自定义view控件、查看手机存储图片、实现圆形头像绘制等功能，然后等到本月下旬再开展有关datagramsocket和udp通信的一系列东西。
+
+用shape实现控件圆角设置。步骤如下
+1.在drawable文件下新建一个文件“corner_xml”
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#3399ff" />
+    <corners
+        android:topLeftRadius="5dp"
+        android:topRightRadius="5dp"
+        android:bottomRightRadius="0dp"
+        android:bottomLeftRadius="0dp"/>
+</shape>
+solid表示填充颜色、也就是将作为控件背景的颜色；
+corners表示圆角，依次是上左、上右、下左、下右角、值越大圆角越明显、5dp已经很适合一般的圆角要求了
+<corners android:radius="5dp" /> 也可以简单设定四个角一样的属性
+2.直接在控件里设定background为corner_xml就可以了
+ 
