@@ -1,0 +1,26 @@
+
+今天的问题很让人头疼、就是关于如何在项目中加入Float Action Button以及一系列的MD控件
+
+1.在bulid.gradle里面的dependencies添加
+compile 'com.android.support:design:22.2.0'
+
+2.在xml文件里使用FAB
+<android.support.design.widget.FloatingActionButton
+android:layout_height="54dp"
+android:layout_width="54dp"
+app:borderWidth="0dp"
+android:layout_marginTop="100dp"
+android:layout_marginLeft="100dp"/>
+
+
+3.这时发现报错了，大意是
+The following classes could not be instantiated FloatingActionButton
+
+4.去掉前缀，改成FloatingActionButton
+
+5.发现预览黑了、并且运行后手机app停止运行
+
+6.再次打上全部，这次就可以正常运行了
+
+7.但是关于android5.0上的FAB存在bug问题，具体参考
+http://www.jianshu.com/p/1078568e859f
