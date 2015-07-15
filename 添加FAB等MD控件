@@ -28,3 +28,5 @@ http://www.jianshu.com/p/1078568e859f
 报错信息为Error:Execution failed for task ':myapp:dexDebug'. com.android.ide.common.process.ProcessException: org.gradle.process.internal.ExecException: Process 'command '*************'' finished with non-zero exit value 2  
 这个可能是由于你导入的包里含有你之前导入的包，从而导致报错
 注意删除原有的包的时候不能只删除build.gradle里的程序，还要在libs里面将原有包彻底删除，否则依然会报错！！
+
+9.鉴于google的md控件还有很多bug，所以尽量推荐使用成熟开源包
