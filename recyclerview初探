@@ -1,0 +1,80 @@
+RecyclerView 是 android-support-v7-21 版本中新加入的一个控件，用来代替ListView、GridView以及实现瀑布流界面。
+
+1.准备工作：
+dependencies {
+    compile 'com.android.support:recyclerview-v7:+'
+    ...
+}
+
+2.在布局文件中加入RecyclerView
+<android.support.v7.widget.RecyclerView
+    android:id="@+id/fragone_recyclerview"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_marginLeft="3dp"
+    android:layout_marginRight="3dp"
+    android:layout_marginTop="3dp">
+</android.support.v7.widget.RecyclerView>
+
+3.自定义Adapter，跟ListView自定义Adapter很像
+public class Fragone_recycler_adapter extends RecyclerView.Adapter<Fragone_recycler_adapter.ViewHolder> {//这里注意<>里面是自己定义的ViewHolder
+    private List<Note> Note;
+
+    public Fragone_recycler_adapter(Context context,List<Note> Note){//初始化类函数
+        this.Note = Note;
+    }
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup viewGroup,int viewType){
+        View view = View.inflate(viewGroup.getContext(),R.layout.gridviewitem,null);//创建一个View,用到了自定义的布局
+        ViewHolder holder = new ViewHolder(view);//创建一个ViewHolder
+        return holder;
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder viewHolder, int i) {
+        // 绑定数据到ViewHolder上
+        final Note Note = (Note)getItem(i);
+        viewHolder.notetime.setText(Note.time);
+        viewHolder.notebody.setText(Note.body);
+        viewHolder.notetitle.setText(Note.title);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;//返回位置
+    }
+
+    @Override
+    public int getItemCount() {
+        return (Note==null)?0:Note.size();
+    }
+
+    public Object getItem(int position) {
+        return Note.get(position);
+    }//获得指定位置的项目
+
+    public static class ViewHolder extends RecyclerView.ViewHolder{
+
+        public TextView notetitle;
+        public TextView notebody;
+        public TextView notetime;;
+
+        public ViewHolder(View itemView) {//自定义的viewholder
+            super(itemView);
+            notetitle = (TextView)itemView.findViewById(R.id.notetitle);
+            notebody = (TextView)itemView.findViewById(R.id.notebody);
+            notetime = (TextView)itemView.findViewById(R.id.notetime);
+        }
+    }
+}
+
+4.Activity中
+LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+RecyclerView recyclerview = (RecyclerView)view.findViewById(R.id.fragone_recyclerview);
+recyclerview.setLayoutManager(layoutManager);
+Note = new ArrayList<Note>();
+Note.add(new Note("测试标题", "测试正文","测试时间"));
+Fragone_recycler_adapter adapter = new Fragone_recycler_adapter(getActivity(),Note);
+recyclerview.setAdapter(adapter);
+这里要注意一点，这里是在fragment里面实现的recyclerview，如果需要得到fragment的context，要使用getActivity()方法才可以！
+其他都跟Activity一样
