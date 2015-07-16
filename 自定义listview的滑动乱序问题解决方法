@@ -1,0 +1,21 @@
+一个严重的问题、关于自定义listview在滑动时数据发生乱序等奇怪问题，解决方法如下
+
+在自定义adapter里面的getview方法
+@Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        final Note Note = (Note)getItem(position);
+        ViewHolder viewholder = null;
+        //if(convertView == null){
+            convertView = LayoutInflater.from(context).inflate(R.layout.noteitem_cardview,null);
+            viewholder = new ViewHolder();
+            viewholder.notetitle = (TextView)convertView.findViewById(R.id.notetitle_cardview);
+            viewholder.notebody = (TextView)convertView.findViewById(R.id.notebody_cardview);
+            viewholder.notetime = (TextView)convertView.findViewById(R.id.notetime_cardview);
+            viewholder.notetitle.setText(Note.title);
+            viewholder.notebody.setText(Note.body);
+            viewholder.notetime.setText(Note.time);
+        //}
+        return convertView;
+    }
+}
+去掉if判断语句，可以暂时保证没有乱序问题，但是感觉这个方法不太妥当。需要进一步研究。
