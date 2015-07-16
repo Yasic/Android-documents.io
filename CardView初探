@@ -1,0 +1,83 @@
+CardView继承自FrameLayout，所以他是一个父控件，可以加载任意子View。
+CardView主要实现了圆角和阴影的简捷实现，只需要代码就可以完成MD风格的View
+
+1.准备工作
+dependencies {
+	compile 'com.android.support:cardview-v7:21.0.3'
+    ...
+}
+
+2.在布局文件中添加CardView
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    app:contentPaddingLeft="5dp"
+    app:contentPaddingRight="5dp"
+    app:cardCornerRadius="7dp"
+    app:cardPreventCornerOverlap="false"
+    app:cardUseCompatPadding="true"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:id="@+id/noteitemstext_cardview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/notetitle_cardview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:singleLine="true"
+                android:gravity="center_vertical"
+                android:textSize="34dp"
+                >
+            </TextView>
+            <TextView
+                android:id="@+id/notebody_cardview"
+                android:singleLine="true"
+                android:layout_width="match_parent"
+                android:layout_marginTop="3dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textSize="24dp">
+            </TextView>
+            <TextView
+                android:id="@+id/notetime_cardview"
+                android:layout_marginBottom="5dp"
+                android:layout_width="match_parent"
+                android:gravity="center_vertical"
+                android:layout_marginTop="3dp"
+                android:layout_height="wrap_content"
+                android:textSize="16dp">
+            </TextView>
+        </LinearLayout>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
+
+app:contentPadding设置cardview的内边距
+app:cardCornerRadius="7dp"//设置cardview圆角大小
+app:cardElevation="@dimen/elevation_cardview"//设置cardview的阴影大小
+
+5.0之前，圆角的裁剪是比较耗性能的，所以CardView就没有裁剪它的子View，但是为了展现CardView的圆角，默认情况下CardView添加了适当的padding。
+如果想去掉这个效果，可以通过setPreventCornerOverlap(boolean)方法来设置。或在布局文件中加上下面的代码
+app:cardPreventCornerOverlap="false"
+
+5.0之前的版本实现cardview是在view内部绘制shadow，5.0之后想要统一在内部实现shadow则应加上下面代码
+app:cardUseCompatPadding="true"
+
+实现点击波浪效果
+android:clickable="true"
+android:foreground="?android:attr/selectableItemBackground"
+
+3.注意问题
+我在一个替换了部分LinearLayout的fragment布局中使用cardview时，开始在cardview中包含LinearLayout，宽度总是不能铺满父容器
+具体情况是，cardview会随着LinearLayout中最长的那个子view变化宽度
+将LinearLayout改成RelativeLayout则问题解决
