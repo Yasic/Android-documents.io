@@ -1,0 +1,13 @@
+关于取消输入法框自动弹出的方法很多，这里简单说几种。
+主要原因是布局文件中第一个editview会自动获取到焦点，当然获取到焦点不一定就会弹出输入框
+
+方法1.在activity文件中加上
+getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+优点是可以灵活选择什么时候弹出，什么时候不弹出。
+
+方法2.在第一个editview前再加上一个不显示的view强制获得焦点
+<View 
+  android:layout_width="0dip" 
+  android:layout_height="0dip"
+  android:focusableInTouchMode="true" />
+但这种方法不能灵活在activity中改变
