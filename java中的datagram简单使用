@@ -1,0 +1,80 @@
+udp通信是一种无连接不可靠的通信，与tcp相对。
+udp通信协议中不要求接收方接收到信息后对发送方反馈信息，发送方只考虑发送不考虑是否发送成功。此协议优势在于快速便捷，延迟小。
+socket代表了一种客户端与服务器之间的通信进程，它是一种连接模式，而非协议,用socket可以实现tcp或者是udp的连接.
+
+在java.net包里包含了实现udp协议的DatagramSocket和DatagramPacket。
+DatagraSocket表示接收或发送数据报的套接字（socket实体）；
+DatagramPacket表示存放数据的数据报。
+
+具体的实现步骤分成发送方和接收方，抽象表达如下：
+发送方：
+1.创建发送方套接字：
+    a.DatagramSocket():表示创建一个默认的套接字，并绑定到本地地址和一个随机的端口号
+    b.DatagramSocket(int port):与上面不同的是，绑定到特定端口号，其它不变
+    c.DatagramSocket(int port, InetAddress iad):表示创建一个套接字，绑定到特定的端口号及指定地址
+    d.DatagramSocket(SocketAddress sad);表示创建一个套接字，绑定到特定的套接字地址
+2.创建发送方数据
+3.转化数据为Byte[]形式
+4.创建DatagramPacket
+    a.DatagramPacket(byte[] buf, int length, InetAddress address, int port);将指定长度的buf数据传送到指定位置的指定端口
+    b.DatagramPacket(byte[] buf, int length, SocketAddress address);将length长的buf数据发送到指定的套接字地址处
+5.发送datagrampacket
+
+接收方：
+1.创建接收方套接字
+2.创建接收方DatagramPacket
+    DatagramPacket getpacket = new DatagramPacket(buf, buf.length);
+3.接收datagrampacket
+4.解析接收到的信息
+
+需要特别说明一下关于初始化地址的InetAddress类的使用问题
+static InetAddress[] getAllByName(String host)//在给定主机名的情况下，根据系统上配置的名称服务返回其 IP 地址所组成的数组
+static InetAddress getByAddress(byte[] addr)//在给定原始 IP 地址的情况下，返回 InetAddress 对象
+static InetAddress getByAddress(String host,byte[] addr)//根据提供的主机名和 IP 地址创建 InetAddress
+static InetAddress getByName(String host)//最常用，用域名或者ip地址均可实现
+static InetAddress getHostAddress()//返回 IP 地址字符串（以文本表现形式）
+static InetAddress getHostName()//获取此 IP 地址的主机名。
+static InetAddress getLocalHost()//返回本地主机。
+
+接下来附上一个简单的demo
+------要注意，在android客户端运行socket时必须在子线程进行，否则会报错。------
+发送方
+try{
+    DatagramSocket sendSocket = new DatagramSocket();
+    String message = "Hello computer!";
+    byte[] buf = message.getBytes();
+    int port = 8888;
+    InetAddress ip = InetAddress.getByName("100.64.132.21");//事先获取到的接收端地址
+    DatagramPacket sendpacket = new DatagramPacket(buf,buf.length,ip,port);
+    sendSocket.send(sendpacket);
+}   
+catch (Exception e){
+    Log.i("error",e.toString());
+}
+
+接收方
+package datagram;
+
+import java.net.DatagramSocket;
+import java.net.DatagramPacket;
+import java.net.InetAddress;
+import java.net.SocketAddress;
+
+public class test {
+    public static void main(String[] args){
+        try{
+            int port = 8888;
+            InetAddress ip = InetAddress.getLocalHost();
+            System.out.println("本机地址:"+ip.toString());
+            DatagramSocket getSocket = new DatagramSocket(port,ip);
+            byte[] buf = new byte[1024];
+            DatagramPacket getpacket = new DatagramPacket(buf, buf.length);
+            getSocket.receive(getpacket);
+            String getmessage = new String(buf,0,getpacket.getLength());
+            System.out.println("收到信息："+getmessage);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+}
