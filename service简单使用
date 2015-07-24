@@ -1,0 +1,53 @@
+serviece是android开发中的四大组件之一，特点是不依赖UI，适合用来实现需要长时间在后台运行的程序。
+
+一、分类
+serviece按运行地点有Local service和Remote serviece两类
+    1.Local service依附在应用主进程上，节约资源，主进程被kill后serviece随之被kill.serviece默认为Local属性
+    2.Remote service独立于进程，主进程kill后依然运行，使用ALDL进行IPC比较麻烦。
+        1.Romote serviece 需要声明为 android:process=":remote"
+        2.AIDL（Android Interface Definition Language）是Android接口定义语言的意思，它可以用于让某个Service与多个应用程序组件之间进行跨进程通信，从而可以实现多个应用程序共享同一个Service的功能。
+        3.IPC的意思是跨进程通信。
+servie按运行类型有前台serviece和后台serviece两类
+    1.前台serviece会在通知栏显示Notification，不会由于系统内存不足的原因导致被回收
+    2.后台serviece，默认的服务即为后台服务，即不会在通知一栏显示 ONGOING 的 Notification。
+
+二、Local serviece后台实现过程
+1.创建一个serviece类继承serviece
+public class Socket_service extends Service {
+
+    @Override
+    public void onCreate(){
+        super.onCreate();
+    }
+
+   @Override
+    public int onStartCommand(Intent intent,int flags,int startId){
+        return super.onStartCommand(intent,flags,startId);
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+}
+
+2.在AndroidManifeast.xml文件中声明service
+<application>
+        <service android:name=".Socket_service" >
+        </service>
+</application>
+
+3.Activity中启动和关闭serviece
+    a.启动
+        Intent sartservice_intent = new Intent(this,Socket_service.class);
+        startService(sartservice_intent);
+    b.关闭
+        Intent stopservice_intent = new Intent(Mainpage.this,Socket_service.class);
+        stopService(stopservice_intent);
+
+三、Local service前台实现过程
