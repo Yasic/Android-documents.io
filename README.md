@@ -19,3 +19,4 @@
 <a href="https://github.com/Yasic/Android-documents.io/blob/master/%E5%8F%96%E6%B6%88%E5%90%AF%E5%8A%A8activity%E6%97%B6editview%E5%BC%B9%E5%87%BA%E8%BE%93%E5%85%A5%E6%A1%86%E8%AE%BE%E5%AE%9A">14.取消启动activity时editview弹出输入框设定</a></p>
 <a href="https://github.com/Yasic/Android-documents.io/blob/master/java%E4%B8%AD%E7%9A%84datagram%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8">15.java中的datagram简单使用</a></p>
 <a href="https://github.com/Yasic/Android-documents.io/blob/master/service%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8">16.service简单使用</a></p>
+<a href="https://github.com/Yasic/Android-documents.io/blob/master/android%20studio%E7%BB%99app%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%97%E4%BD%93%E6%96%87%E4%BB%B6">android studio给app添加自定义字体文件</a></p>
