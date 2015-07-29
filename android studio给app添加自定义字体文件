@@ -1,0 +1,14 @@
+ttf字体文件的加入可以在app中添加自己想要的字体类型，也就是text stype。
+在android studio中的过程如下：
+
+1.添加assets文件
+project->src->main位置，右键new->Folder->Assets Folder
+
+2.在assets文件中new->Directory->Fonts文件
+
+3.在Fonts文件中复制下载好的ttf文件，例如typewriter-monospacedletter-gothic-regular.ttf
+
+4.在activity文件中，对于要改变字体的控件如textview执行以下操作
+TextView testtextview = (TextView)findViewById(R.id.mainactivity_title);
+Typeface typeface = Typeface.createFromAsset(getBaseContext().getAssets(), "Fonts/typewriter-monospacedletter-gothic-regular.ttf");
+testtextview.setTypeface(typeface);
