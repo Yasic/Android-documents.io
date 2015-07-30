@@ -143,6 +143,8 @@ public class FloatWindowService extends Service {
     }
 }
 
+详细补充
+
 3.添加service到AndroidManifests.xml文件中
 
 4.在activity中启动service
