@@ -71,18 +71,37 @@ public class FloatWindowService extends Service {
                 wmParams.height = dp2pix(48);
 
                 LayoutInflater inflater = LayoutInflater.from(getApplication());
-                mFloatLayout = (LinearLayout) inflater.inflate(R.layout.float_window, null);
+                mFloatLayout = (LinearLayout) inflater.inflate(R.layout.float_window , null);
+                float_window_menu = (CardView)inflater.inflate(R.layout.float_window_menu , null);
                 mWindowManager.addView(mFloatLayout, wmParams);
                 floatwindowbutton = (Button)mFloatLayout.findViewById(R.id.floatwindowbutton);
-
+                home_button = (Button)float_window_menu.findViewById(R.id.home_button);
+                back_button = (Button)float_window_menu.findViewById(R.id.back_button);
+                power_button = (Button)float_window_menu.findViewById(R.id.power_button);
+                close_button = (Button)float_window_menu.findViewById(R.id.close_button);
+        
                 floatwindowbutton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(clickflag == true) {
-                            Intent intent = new Intent(Intent.ACTION_MAIN);
+                        if(clickflag == true) {//不是onTouch事件
+                            mWindowManager.removeView(mFloatLayout);
+                            int screenWidth = mWindowManager.getDefaultDisplay().getWidth();
+                            int screenHeight = mWindowManager.getDefaultDisplay().getHeight();
+                            menuParams = new WindowManager.LayoutParams();
+                            menuParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
+                            menuParams.format = PixelFormat.TRANSLUCENT;
+                            menuParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+                            menuParams.gravity = Gravity.LEFT | Gravity.TOP;
+                            menuParams.x = screenWidth / 2 - dp2pix(148) / 2;
+                            menuParams.y = screenHeight/2 - dp2pix(128)/2;
+                            menuParams.width = dp2pix(148);
+                            menuParams.height = dp2pix(128);
+                            mWindowManager.addView(float_window_menu,menuParams);
+
+                            /*Intent intent = new Intent(Intent.ACTION_MAIN);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             intent.addCategory(Intent.CATEGORY_HOME);
-                            startActivity(intent);
+                            startActivity(intent);*/
                         }
                     }
                 });
