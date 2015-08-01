@@ -1,0 +1,16 @@
+在android中用代码实现回到桌面功能代码一般是：
+
+Intent intent = new Intent(Intent.ACTION_MAIN);
+intent.putExtra("GOHOME","GOHOME");
+intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+intent.addCategory(Intent.CATEGORY_HOME);
+startActivity(intent);
+
+或者更简便的
+Intent intent = new Intent(Intent.ACTION_MAIN);
+intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+intent.addCategory(Intent.CATEGORY_HOME);
+activity.startActivity(intent);
+
+但是在android5.0上会出现一个bug，在桌面进行回到桌面代码时，短时间内点入全部应用页面，不久会自动回到桌面
+暂时没有解决办法
