@@ -1,0 +1,38 @@
+android判断当前界面是否为桌面的方法：
+
+private boolean ishome(){
+        ActivityManager mActivityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> rti = mActivityManager.getRunningTasks(1);
+        return getHomes().contains(rti.get(0).topActivity.getPackageName());
+}
+
+private List<String> getHomes() {
+    List<String> names = new ArrayList<String>();
+    PackageManager packageManager = this.getPackageManager();
+    Intent intent = new Intent(Intent.ACTION_MAIN);
+    intent.addCategory(Intent.CATEGORY_HOME);
+    List<ResolveInfo> resolveInfo = packageManager.queryIntentActivities(intent
+        PackageManager.MATCH_DEFAULT_ONLY);
+    for (ResolveInfo ri : resolveInfo) {
+        names.add(ri.activityInfo.packageName);
+    }
+    return names;
+}
+
+具体方法如下：
+1.获得属于桌面的应用，找出所有声明为Intent.CATEGORY_HOME的activity所在的包名
+2.获得当前Runningtask中的第一个的包名
+3.与桌面包名list对比得出是否是桌面
+
+需要权限为：
+<uses-permission android:name="android.permission.GET_TASKS" />
+
+但是在谷歌的官方文档中写到：
+This method was deprecated in API level 21.
+As of LOLLIPOP, this method is no longer available to third party applications: the introduction of document-centric recents means it can leak person information to the caller. For backwards compatibility, it will still retu rn a small subset of its data: at least the caller's own tasks, and possibly some other tasks such as home that are known to not be sensitive.
+
+Return a list of the tasks that are currently running, with the most recent being first and older ones after in order. Note that "running" does not mean any of the task's code is currently loaded or activity -- the task may have been frozen by the system, so that it can be restarted in its previous state when next brought to the foreground.
+
+Note: this method is only intended for debugging and presenting task management user interfaces. This should never be used for core logic in an application, such as deciding between different behaviors based on the information found here. Such uses are not supported, and will likely break in the future. For example, if multiple applications can be actively running at the same time, assumptions made about the meaning of the data here for purposes of control flow will be incorrect.
+
+所以这个方法在android5.0以上的版本是不适用的！
