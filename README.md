@@ -21,3 +21,5 @@
 <a href="https://github.com/Yasic/Android-documents.io/blob/master/service%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8">16.service简单使用</a></p>
 <a href="https://github.com/Yasic/Android-documents.io/blob/master/android%20studio%E7%BB%99app%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%97%E4%BD%93%E6%96%87%E4%BB%B6">17.android studio给app添加自定义字体文件</a></p>
 <a href="https://github.com/Yasic/Android-documents.io/blob/master/%E7%AE%80%E6%98%93%E6%82%AC%E6%B5%AE%E7%AA%97%E7%9A%84%E5%AE%9E%E7%8E%B0">18.简易悬浮窗的实现</a></p>
+<a href="https://github.com/Yasic/Android-documents.io/blob/master/%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%E5%9B%9E%E5%88%B0%E6%A1%8C%E9%9D%A2%E5%8F%8Abug">19.代码实现回到桌面及bug</a></p>
+<a href="https://github.com/Yasic/Android-documents.io/blob/master/%E5%88%A4%E6%96%AD%E5%BD%93%E5%89%8D%E7%95%8C%E9%9D%A2%E4%B8%BA%E6%A1%8C%E9%9D%A2(%E4%B8%8D%E9%80%82%E7%94%A8android.L)">20.判断当前界面为桌面(不适用android.L)</a></p>
