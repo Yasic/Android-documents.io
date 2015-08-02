@@ -1,0 +1,5 @@
+以button为例，一般方法有两种：
+1.button.setBackground(this.getResources().getDrawable(R.drawable.xxx));
+2.button.setBaclgrounResource(R.drawable.xxx);
+
+方法1适用于sdk16以上版本，对于sdk16以下则尽量使用方法2
