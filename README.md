@@ -23,3 +23,6 @@
 <a href="https://github.com/Yasic/Android-documents.io/blob/master/%E7%AE%80%E6%98%93%E6%82%AC%E6%B5%AE%E7%AA%97%E7%9A%84%E5%AE%9E%E7%8E%B0">18.简易悬浮窗的实现</a></p>
 <a href="https://github.com/Yasic/Android-documents.io/blob/master/%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%E5%9B%9E%E5%88%B0%E6%A1%8C%E9%9D%A2%E5%8F%8Abug">19.代码实现回到桌面及bug</a></p>
 <a href="https://github.com/Yasic/Android-documents.io/blob/master/%E5%88%A4%E6%96%AD%E5%BD%93%E5%89%8D%E7%95%8C%E9%9D%A2%E4%B8%BA%E6%A1%8C%E9%9D%A2(%E4%B8%8D%E9%80%82%E7%94%A8android.L)">20.判断当前界面为桌面(不适用android.L)</a></p>
+<a href="https://github.com/Yasic/Android-documents.io/blob/master/%E5%AF%B9%E6%8E%A7%E4%BB%B6%E8%AE%BE%E7%BD%AE%E8%83%8C%E6%99%AF">21.对控件设置背景</a></p>
+<a href="https://github.com/Yasic/Android-documents.io/blob/master/timertask%E4%B8%8Ehandle%E7%BB%93%E5%90%88%E6%9B%B4%E6%96%B0UI">22.timertask与handle结合更新UI</a></p>
+<a href="https://github.com/Yasic/Android-documents.io/blob/master/wifi%E6%8E%A7%E5%88%B6%E5%92%8C%E5%85%B7%E4%BD%93%E7%8A%B6%E6%80%81">23.wifi控制和具体状态</a></p>
