@@ -1,0 +1,17 @@
+android的wifi控制主要依靠WifiManager
+
+1.实例化WifiManager
+WifiManager wifimanager;
+wifimanager = (WifiManager)this.getSystemService(Context.WIFI_SERVICE);
+
+2.获取wifi_state
+int state = wifimanager.getWifiState();
+state:
+	0 = WIFI_STATE_DISABLING
+	1 = WIFI_SDATE_DISABLED
+	2 = WIFI_STATE_ENABLING
+	3 = WIFI_STATE_ENABLED
+
+3.wifi开启与关闭
+wifimanager.setWifiEnabled(true);//关闭wifi
+wifimanager.setWifiEnabled(false);//开启wifi
