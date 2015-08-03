@@ -74,3 +74,35 @@ public class MyService extends Service {
     .........  
   
 }  
+
+四、service广播式通知前台activity
+Brodcast是android四大组件之一，有独立而短暂的生命周期，一般来说在10s以内，不适合实现耗时操作
+关于广播将另开一篇详细描述，这里先记录一下service将消息广播出去后被Activity接收的过程
+1.在service中进行广播发送
+Intent intent = new Intent("RECEIVER");//action为RECEIVER
+intent.putExtra("localgps",message);
+sendBroadcast(intent);//发送广播信息
+
+2.在activity中或单独声明广播接收器
+public class Receiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ……
+            ……
+        }
+    }
+可以看出里面只需要实现onReceive方法即可
+
+3.在activity中注册一个广播接收器
+receiver = new Receiver();
+IntentFilter intentFilter = new IntentFilter();
+intentFilter.addAction("RECEIVER");//确定接收广播类型为RECEIVER类型
+registerReceiver(receiver,intentFilter);//注册广播接收器
+
+4.一定记得注销广播接收器
+@Override
+    protected void onDestroy() {
+        unregisterReceiver(receiver);//注销广播
+    }
+
