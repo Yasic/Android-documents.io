@@ -1,0 +1,95 @@
+android.os和java.util.logging均含有handle元素
+
+android.os.Handler即我们常用的handler，包含方法如下
+@Override
+    public void handleMessage(Message msg) {
+        if(msg.what == 1) {
+        }
+        super.handleMessage(msg);
+
+java.util.logging.Handler包含方法如下
+    @Override
+    public void close() {
+            
+    }
+
+    @Override
+    public void flush() {
+
+    }
+
+    @Override
+    public void publish(LogRecord record) {
+
+    }
+
+这两个是包含在不同包里的完全不同的两个方法，毫无任何关系。
+在androidstudio中直接写handler会默认import java包，所以要手动删除并import android.os.Handler
+
+在android中更新UI必须在主线程中进行，即使是在timetask中更新UI也要通过handler返回消息给主线程进行UI更新。
+具体方法如下：
+1.先声明Handler
+Handler handler = new Handler(){
+      @Override
+    public void handleMessage(Message msg){
+        switch (msg.what){
+            case 0:
+                //WIFI_STATE_DISABLING
+                wifi_button.setBackground(getApplication().getResources().getDrawable(R.drawable.ic_wifi_grey600_48dp));
+                break;
+            case 1:
+                //WIFI_SDATE_DISABLED
+                wifi_button.setBackground(getApplication().getResources().getDrawable(R.drawable.ic_wifi_grey600_48dp));//此方法只适用于sdk16以上版本
+                break;
+            case 2:
+                //WIFI_STATE_ENABLING
+                wifi_button.setBackground(getApplication().getResources().getDrawable(R.drawable.ic_wifi_grey600_48dp));
+                break;
+            case 3:
+                // WIFI_STATE_ENABLED
+                wifi_button.setBackground(getApplication().getResources().getDrawable(R.drawable.ic_wifi_white_48dp));
+                break;
+            default:
+                Toast.makeText(getApplication(),"Mistake happened!",Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+};
+
+2.timertask中发送message给Handler
+Timer timer = new Timer(true);
+        TimerTask timetask = new TimerTask() {
+            @Override
+            public void run() {
+                Message msg = new Message();
+                switch (wifimanager.getWifiState()){
+                    case 0:
+                        //WIFI_STATE_DISABLING
+                        //wifi_button.setBackground(this.getResources().getDrawable(R.drawable.ic_wifi_grey600_48dp));
+                        msg.what = 0;
+                        break;
+                    case 1:
+                        //WIFI_SDATE_DISABLED
+                        //wifi_button.setBackground(this.getResources().getDrawable(R.drawable.ic_wifi_black_48dp));//此方法只适用于sdk16以上版本
+                        msg.what = 1;
+                        break;
+                    case 2:
+                        //WIFI_STATE_ENABLING
+                        //wifi_button.setBackground(this.getResources().getDrawable(R.drawable.ic_wifi_grey600_48dp));
+                        msg.what = 2;
+                        break;
+                    case 3:
+                        // WIFI_STATE_ENABLED
+                        //wifi_button.setBackground(this.getResources().getDrawable(R.drawable.ic_wifi_white_48dp));
+                        //wifi_button.setBackgroundResource(R.drawable.ic_wifi_white_48dp);
+                        msg.what = 3;
+                        break;
+                    default:
+                        //Toast.makeText(this,"Mistake happened!",Toast.LENGTH_SHORT).show();
+                        msg.what = 4;
+                        break;
+                }
+                handler.sendMessage(msg);
+            }
+        };
+timer.schedule(timetask,0,300);
