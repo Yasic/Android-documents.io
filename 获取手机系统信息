@@ -1,0 +1,8 @@
+手机型号:android.os.Build.MODEL
+手机sdk版本号:android.os.Build.VERSION.SDK
+手机android系统版本号:android.os.Build.VERSION.RELEASE
+均为字符串类型，可以直接获取
+
+要获得int型版本号，方法如下
+String temp[] = Build.VERSION.RELEASE.split("\\.");//.是转义字符，要加上//
+int system = Integer.parseInt(temp[0]);
