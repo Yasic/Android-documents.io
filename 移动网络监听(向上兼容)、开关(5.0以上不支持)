@@ -1,0 +1,55 @@
+移动网络开启与关闭在android5.0以上版本均不能实现，只能监听状态
+
+获取移动网络状态
+public boolean getMobileDataState(){
+        ConnectivityManager connectivitymangager;
+        connectivitymangager = (ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);//获取移动数据系统服务
+
+        Class cmclass = connectivitymangager.getClass();
+        Class[] argclass = null;
+        Object[] argobject = null;
+        Boolean isopen = false;
+
+        try{
+            Method method = cmclass.getMethod("getMobileDataEnabled",argclass);//注意字符串
+            isopen = (Boolean)method.invoke(connectivitymangager,argobject);
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return isopen;
+    }
+
+开启与关闭
+public void setMobileState(Context context,Boolean enabled){
+        ConnectivityManager connectivityManager = (ConnectivityManager)this.getSystemService(context.CONNECTIVITY_SERVICE);
+        Class<?> conMgrClass = null;
+        Field iconMgrField = null;
+        Object iconMgr = null;
+        Class<?> iconMgrClass = null;
+        Method setMobileDataEnabledMethod = null;
+        try{
+            conMgrClass = Class.forName(connectivityManager.getClass().getName());
+            iconMgrField = conMgrClass.getDeclaredField("mService");
+            iconMgrField.setAccessible(true);
+            iconMgr = iconMgrField.get(connectivityManager);
+            iconMgrClass = Class.forName(iconMgr.getClass().getName());
+            setMobileDataEnabledMethod = iconMgrClass.getDeclaredMethod("setMobileDataEnabled",Boolean.TYPE);
+            setMobileDataEnabledMethod.setAccessible(true);
+            setMobileDataEnabledMethod.invoke(iconMgr,enabled);//开关
+        }catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+    }
