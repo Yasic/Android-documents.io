@@ -1,28 +1,2 @@
 # Android-documents.io
-放一些开发文档以供学习和参考。
-
-目录：
-
-<a href="https://github.com/Yasic/Android-documents.io/blob/master/Activity%E5%88%87%E6%8D%A2%E7%9A%84%E8%BF%87%E5%BA%A6%E5%8A%A8%E7%94%BB">1.Activity切换的过度动画</a></p>
-<a href="https://github.com/Yasic/Android-documents.io/blob/master/android%E8%87%AA%E5%B8%A6%E7%9A%84toolbar%E5%AE%9E%E7%8E%B0drawer%E8%8F%9C%E5%8D%95%E6%95%88%E6%9E%9C">2.android自带的toolbar实现drawer菜单效果</a></p>
-<a href="https://github.com/Yasic/Android-documents.io/blob/master/toolbar%E4%BF%AE%E6%94%B9toggle%20button%E5%92%8Ctittle%20text%E7%9B%B8%E5%85%B3">3.toolbar修改toggle button和tittle text相关</a></p>
-<a href="https://github.com/Yasic/Android-documents.io/blob/master/ObjectAnimator%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8F%8A%E8%8E%B7%E5%8F%96%E5%B1%8F%E5%B9%95%E5%AE%BD%E5%BA%A6">4.ObjectAnimator的使用及获取屏幕宽度</a></p>
-<a href="https://github.com/Yasic/Android-documents.io/blob/master/drawerlayout%E7%9A%84%E2%80%9C%E4%BA%8B%E4%BB%B6%E7%A9%BF%E9%80%8F%E2%80%9Dbug%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95">5.drawerlayout的“事件穿透”bug解决方法</a></p>
-<a href="https://github.com/Yasic/Android-documents.io/blob/master/%E8%AE%BE%E7%BD%AE%E5%AD%97%E4%BD%93%E9%98%B4%E5%BD%B1">6.设置字体阴影</a></p>
-<a href="https://github.com/Yasic/Android-documents.io/blob/master/android%E4%B8%AD%E4%BD%BF%E7%94%A8timer%E5%92%8Ctimertask">7.android中使用timer和timertask</a></p>
-<a href="https://github.com/Yasic/Android-documents.io/blob/master/%E6%8E%A7%E4%BB%B6%E7%AE%80%E5%8D%95%E8%AE%BE%E7%BD%AE%E5%9C%86%E8%A7%92%E6%96%B9%E6%B3%95">8.控件简单设置圆角方法</a></p>
-<a href="https://github.com/Yasic/Android-documents.io/blob/master/%E8%87%AA%E5%AE%9A%E4%B9%89view%E6%96%B9%E6%B3%951_%E7%BB%84%E5%90%88%E6%8E%A7%E4%BB%B6%E6%B3%95">9.自定义view方法1_组合控件法</a></p>
-<a href="https://github.com/Yasic/Android-documents.io/blob/master/%E6%B7%BB%E5%8A%A0FAB%E7%AD%89MD%E6%8E%A7%E4%BB%B6">10.添加FAB等MD控件时遇到的问题</a></p>
-<a href="https://github.com/Yasic/Android-documents.io/blob/master/recyclerview%E5%88%9D%E6%8E%A2">11.recyclerview初探</a></p>
-<a href="https://github.com/Yasic/Android-documents.io/blob/master/CardView%E5%88%9D%E6%8E%A2">12.CardView初探</a></p>
-<a href="https://github.com/Yasic/Android-documents.io/blob/master/%E8%87%AA%E5%AE%9A%E4%B9%89listview%E7%9A%84%E6%BB%91%E5%8A%A8%E4%B9%B1%E5%BA%8F%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95">13.自定义listview的滑动乱序问题解决方法</a></p>
-<a href="https://github.com/Yasic/Android-documents.io/blob/master/%E5%8F%96%E6%B6%88%E5%90%AF%E5%8A%A8activity%E6%97%B6editview%E5%BC%B9%E5%87%BA%E8%BE%93%E5%85%A5%E6%A1%86%E8%AE%BE%E5%AE%9A">14.取消启动activity时editview弹出输入框设定</a></p>
-<a href="https://github.com/Yasic/Android-documents.io/blob/master/java%E4%B8%AD%E7%9A%84datagram%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8">15.java中的datagram简单使用</a></p>
-<a href="https://github.com/Yasic/Android-documents.io/blob/master/service%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8">16.service简单使用</a></p>
-<a href="https://github.com/Yasic/Android-documents.io/blob/master/android%20studio%E7%BB%99app%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%97%E4%BD%93%E6%96%87%E4%BB%B6">17.android studio给app添加自定义字体文件</a></p>
-<a href="https://github.com/Yasic/Android-documents.io/blob/master/%E7%AE%80%E6%98%93%E6%82%AC%E6%B5%AE%E7%AA%97%E7%9A%84%E5%AE%9E%E7%8E%B0">18.简易悬浮窗的实现</a></p>
-<a href="https://github.com/Yasic/Android-documents.io/blob/master/%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%E5%9B%9E%E5%88%B0%E6%A1%8C%E9%9D%A2%E5%8F%8Abug">19.代码实现回到桌面及bug</a></p>
-<a href="https://github.com/Yasic/Android-documents.io/blob/master/%E5%88%A4%E6%96%AD%E5%BD%93%E5%89%8D%E7%95%8C%E9%9D%A2%E4%B8%BA%E6%A1%8C%E9%9D%A2(%E4%B8%8D%E9%80%82%E7%94%A8android.L)">20.判断当前界面为桌面(不适用android.L)</a></p>
-<a href="https://github.com/Yasic/Android-documents.io/blob/master/%E5%AF%B9%E6%8E%A7%E4%BB%B6%E8%AE%BE%E7%BD%AE%E8%83%8C%E6%99%AF">21.对控件设置背景</a></p>
-<a href="https://github.com/Yasic/Android-documents.io/blob/master/timertask%E4%B8%8Ehandle%E7%BB%93%E5%90%88%E6%9B%B4%E6%96%B0UI">22.timertask与handle结合更新UI</a></p>
-<a href="https://github.com/Yasic/Android-documents.io/blob/master/wifi%E6%8E%A7%E5%88%B6%E5%92%8C%E5%85%B7%E4%BD%93%E7%8A%B6%E6%80%81">23.wifi控制和具体状态</a></p>
+放一些开发文档以供学习和参考
