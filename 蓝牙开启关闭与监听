@@ -1,0 +1,19 @@
+蓝牙开关与监听主要依靠BluetoothAdapter
+<!--蓝牙权限-->
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+
+1.获取adapter实例
+bluetoothadapter = BluetoothAdapter.getDefaultAdapter();
+这是系统默认的adapter，当然也可以自己实现
+
+2.获取是否打开蓝牙
+bluetoothadapter.isEnabled()
+
+3.蓝牙开启与关闭
+if(bluetoothadapter.isEnabled()){
+	bluetoothadapter.disable();//关闭蓝牙
+}
+else{
+	bluetoothadapter.enable();//打开蓝牙
+}
