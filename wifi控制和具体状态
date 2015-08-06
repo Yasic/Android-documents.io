@@ -1,4 +1,9 @@
 android的wifi控制主要依靠WifiManager
+<!-- wifi权限-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
 
 1.实例化WifiManager
 WifiManager wifimanager;
