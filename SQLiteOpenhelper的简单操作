@@ -1,0 +1,83 @@
+SQLite是android内置的一个很小的关系型数据库。 
+SQLiteOpenHelper是一个辅助类来管理数据库的创建和版本。 
+
+下面是这个类的几个方法： 
+
+方法名	返回类型	描述	备注 
+getReadableDatabase()	synchronized SQLiteDatabase	创建或打开一个数据库	可以通过这两个方法返回的SQLiteDatabase对象对数据库进行一系列的操作，如新建一个表，插入一条数据等 
+getWritableDatabase()	synchronized SQLiteDatabase	创建或打开一个可以读写的数据库	
+onCreate(SQLiteDatabase db)	abstract void	第一次创建的时候调用	
+onOpen(SQLiteDatabase db)	void	打开数据库	
+onUpgrade(SQLiteDatabase db,int oldVersion,int newVersion)	abstract void	升级数据库	
+close()	synchronized void	关闭所有打开的数据库对象
+
+1.创建SqliteOpenHelper类
+public class SQLitedbhelper extends SQLiteOpenHelper {
+    final String SQL_CREATE_TABLE = "create table notetable (" +
+            "_id integer primary key autoincrement, " +
+            "title varchar, " +
+            "note varchar,time varchar)";
+
+    public ENoteSQLitedbhelper(Context context,String name,int version){
+        super(context,name,null,version);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL(SQL_CREATE_TABLE);//第一次执行创建数据库操作
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        //System.out.println("call update");
+    }
+}
+
+2.开启数据库
+helper = new ENoteSQLitedbhelper(getActivity(),"ENote", 1);//开启或创建名为ENote的数据库
+
+3.插入数据
+helper.getWritableDatabase().insert("notetable",null,values);
+插入新的表名为notetable的数据，
+第一个参数:表名称、
+第二个参数：SQl不允许一个空列，如果ContentValues是空的，那么这一列被明确的指明为NULL值
+第三个参数：ContentValues对象
+
+4.更新数据
+ContentValues cv = new ContentValues();
+cv.put("title",title);
+cv.put("note",note);
+cv.put("time", bundle.getString("edittime"));
+helperinside.getWritableDatabase().update("notetable", cv , "time = ?", new String[]{bundle.getString("time")});
+更新指定表的指定内容
+第一个参数String：表名
+第二个参数ContentValues：ContentValues对象
+第三个参数String：where字句，相当于sql语句where后面的语句，？号是占位符
+第四个参数String[]：占位符的值
+
+5.删除数据
+helperinside.getWritableDatabase().delete("notetable", "time = ?", new String[]{bundle.getString("time")});//删除数据库
+第一个参数String：表名
+第二个参数String：条件语句
+第三个参数String[]：条件值
+
+6.查询数据
+Cursor cursor = sqliteDatabase.query("user", new String[] { "id",
+                    "name" }, "id=?", new String[] { "1" }, null, null, null);
+第一个参数String：表名
+第二个参数String[]:要查询的列名
+第三个参数String：查询条件
+第四个参数String[]：查询条件的参数
+第五个参数String:对查询的结果进行分组
+第六个参数String：对分组的结果进行限制
+第七个参数String：对查询的结果进行排序
+
+7.遍历数据库
+Cursor cursor = h.getReadableDatabase().rawQuery("SELECT * FROM notetable", null);
+while (cursor.moveToNext()) {
+    Note.add(new Note(cursor.getString(1), cursor.getString(2), cursor.getString(3)));
+}
+
+8.关闭数据库
+ helperinside.close();
+这是很重要的一步，执行完全部操作以后一定记得关闭数据库
