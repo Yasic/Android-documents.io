@@ -1,0 +1,16 @@
+关于一个class中调用另一个class的方法
+
+在B中调用A的方法
+class A{
+	public A(){
+	public void function1(){
+
+	}
+	}
+}
+
+class B{
+	A a = new A();
+	a.function1();
+	new A().fumction1();//匿名对象
+}
