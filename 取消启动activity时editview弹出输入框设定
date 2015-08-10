@@ -11,3 +11,7 @@ getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_
   android:layout_height="0dip"
   android:focusableInTouchMode="true" />
 但这种方法不能灵活在activity中改变
+
+方法3.在editview的父级控件任选一个，添加以下属性
+android:focusable="true" 
+android:focusableInTouchMode="true" 
