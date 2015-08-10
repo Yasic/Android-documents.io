@@ -1,0 +1,227 @@
+listview实现聊天界面方法
+
+1.主布局主要包含一个listview
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/chat_titlebody"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#0288d1"
+        >
+        <ImageButton
+            android:id="@+id/chat_backbutton"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/ic_arrow_left_white_48dp"/>
+        <TextView
+            android:id="@+id/chat_chatername"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:layout_toRightOf="@+id/chat_backbutton"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:gravity="center"
+            android:layout_marginLeft="7dp"
+            android:text="聊天"
+            android:textSize="21dp"
+            android:textColor="#ffffff"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/chat_editbar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true" >
+        <Button
+            android:id="@+id/chat_postbutton"
+            android:layout_width="64dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:layout_alignParentRight="true"
+            android:text="发送"/>
+        <EditText
+            android:id="@+id/chat_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginBottom="3dp"
+            android:layout_toLeftOf="@+id/chat_postbutton"
+            android:layout_alignParentLeft="true"/>
+    </RelativeLayout>
+    <ListView
+        android:id="@+id/chat_listview"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_below="@id/chat_titlebody"
+        android:layout_above="@+id/chat_editbar"
+        android:divider="#ffffff"
+        android:stackFromBottom="true"/>
+</RelativeLayout>
+
+2.发送和接收的消息使用同样的id，但是一个布局在左边，一个布局在右边
+chart_right.xml
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingTop="7dp"
+    android:paddingBottom="7dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="11dp">
+    <TextView
+        android:id="@+id/chater_message"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="7dp"
+        android:background="@drawable/chatqipao_5"
+        />
+</RelativeLayout>
+
+chart_left.xml
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingTop="7dp"
+    android:paddingBottom="7dp"
+    android:layout_marginTop="11dp"
+    android:layout_marginBottom="10dp"
+    >
+    <TextView
+        android:id="@+id/chater_message"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="7dp"
+        android:background="@drawable/chatqipao_2"
+        />
+</RelativeLayout>
+
+3.定义消息格式ChatMsgEntity
+public class ChatMsgEntity {
+    private String message;
+    private Boolean isComMsg = true;
+
+    public ChatMsgEntity(String message,boolean isComMsg){
+        this.message = message;
+        this.isComMsg = isComMsg;
+    }
+
+    public void setMessage(String message){
+        this.message = message;
+    }
+
+    public void setMsgType(boolean isComMsg){
+        this.isComMsg = isComMsg;
+    }
+
+    public boolean getMsgType(){
+        return this.isComMsg;
+    }
+
+    public String getMessage(){
+        return this.message;
+    }
+}
+
+4.定义listview的adapter
+public class Chat_adapter extends BaseAdapter{
+
+    private Context context;
+    private LayoutInflater inflater;
+    private List<ChatMsgEntity> data;
+
+    public static interface MsgViewType{
+        int LEFT_MSG = 0;
+        int RITHT_MSG = 1;
+    }
+
+    public Chat_adapter(Context context, List<ChatMsgEntity> data) {
+        this.context = context;
+        this.data = data;
+        inflater = LayoutInflater.from(context);
+    }
+
+    @Override
+    public int getCount() {
+        return data.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return data.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    public int getItemViewType(int position){
+        ChatMsgEntity temp = data.get(position);
+        if(temp.getMsgType()){
+            return MsgViewType.LEFT_MSG;
+        }
+        else{
+            return MsgViewType.RITHT_MSG;
+        }
+    }
+
+    public int getViewTypeCount(){
+        return 2;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ChatMsgEntity entity = data.get(position);
+        boolean isComMsg = entity.getMsgType();
+        ViewHolder viewHolder = null;
+        if(isComMsg){
+            convertView = inflater.inflate(R.layout.chater_left,null);
+        }
+        else{
+            convertView = inflater.inflate(R.layout.chater_right,null);
+        }
+
+        viewHolder = new ViewHolder();
+        viewHolder.message = (TextView)convertView.findViewById(R.id.chater_message);
+        viewHolder.isComMsg = isComMsg;
+
+        viewHolder.message.setText(entity.getMessage());
+        return convertView;
+    }
+
+    private class ViewHolder{
+        public TextView message;
+        public boolean isComMsg = true;
+    }
+}
+
+5.主activity
+public class Chat extends Activity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState){
+        overridePendingTransition(R.anim.slide_right_in_animation, R.anim.till_out_animation);//activity切换动画
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.chat);
+
+        List<ChatMsgEntity> DataArrays = new ArrayList<ChatMsgEntity>();
+        ChatMsgEntity data_1 = new ChatMsgEntity("你好！",true);
+        DataArrays.add(data_1);
+        ChatMsgEntity data_2 = new ChatMsgEntity("你好！",false);
+        DataArrays.add(data_2);
+        Chat_adapter adapter = new Chat_adapter(this,DataArrays);
+        ListView listview = (ListView)findViewById(R.id.chat_listview);
+        listview.setAdapter(adapter);
+    }
+}
