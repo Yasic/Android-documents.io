@@ -1,4 +1,4 @@
-一个严重的问题、关于自定义listview在滑动时数据发生乱序等奇怪问题，解决方法如下
+1.关于一个严重的问题——自定义listview在滑动时数据发生乱序等奇怪问题，解决方法如下
 
 在自定义adapter里面的getview方法
 @Override
@@ -19,3 +19,7 @@
     }
 }
 去掉if判断语句，可以暂时保证没有乱序问题，但是感觉这个方法不太妥当。需要进一步研究。
+
+2.关于listview倒序排列的方法
+在listview中添加
+android:stackFromBottom="true"
