@@ -1,0 +1,94 @@
+对于动态更新listview里面的item布局方法
+这个问题困扰了我两三天，最终实现了，主要为了实现将未读新消息标为已读
+
+1.先看adapter实现
+public class Allmessage_adapter extends BaseAdapter {
+    private Context context;
+    public List<Allmessage_mode> allmessage_modes;
+    private Boolean isnew = false;
+
+    public Allmessage_adapter(Context context , List<Allmessage_mode> Allmessage_modes){
+        this.context = context;
+        this.allmessage_modes = Allmessage_modes;
+    }
+
+    public void refresh(List<Allmessage_mode> allmessage_modess){
+        this.allmessage_modes = allmessage_modess;
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public int getCount() {
+        return (allmessage_modes == null)?0: allmessage_modes.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return allmessage_modes.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    public boolean getType(int position){
+        return allmessage_modes.get(position).isnew;
+    }
+
+    public void setType(int position,boolean isnew){
+        allmessage_modes.get(position).isnew = isnew;
+    }
+
+    private class ViewHolder{
+        TextView messageitem_name;
+        TextView messageitem_message;
+        TextView messageitem_time;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        Allmessage_mode allmessage_mode = (Allmessage_mode)getItem(position);
+        ViewHolder viewholder = null;
+        if(convertView == null){
+                convertView = LayoutInflater.from(context).inflate(R.layout.messagelist_item_false,null);//简单加载一个固定布局，在后面加上判断语句
+        }
+        if(allmessage_mode.isnew){
+            convertView.setBackgroundColor(Color.parseColor("#88f4ff81"));
+        }
+        else{
+            convertView.setBackgroundColor(Color.parseColor("#ffffff"));
+        }
+        viewholder = new ViewHolder();
+        viewholder.messageitem_name = (TextView)convertView.findViewById(R.id.messageitem_name);
+        viewholder.messageitem_message = (TextView)convertView.findViewById(R.id.messageitem_message);
+        viewholder.messageitem_time = (TextView)convertView.findViewById(R.id.messageitem_time);
+        viewholder.messageitem_name.setText(allmessage_mode.name);
+        viewholder.messageitem_message.setText(allmessage_mode.message);
+        viewholder.messageitem_time.setText(allmessage_mode.time);
+        return convertView;
+    }
+}
+
+2.对于布局文件messagelist_item_false.xml主要注意一个问题，不能设定background属性，否则将不能在adapter里面更新背景
+
+3.activity文件的关键代码
+public void ignoremessage(int position){
+        Allmessage_mode temp = allmessage_modes.get(position);
+        temp.isnew = false;
+        allmessage_modes.remove(position);
+        allmessage_modes.add(position, temp);
+        refreshlistview();
+}
+
+public void refreshlistview(){
+        allmessage_adapter.notifyDataSetChanged();//刷新listview
+        listView.invalidateViews();
+}
+
+在这里开始有一个问题就是没有加listView.invalidateViews();时更新完数据必须划出屏幕再划入屏幕才会生效
+
+4.主要思路
+开始想在getview里不判定convertView!=null，但是出现了加载数据重复的问题
+后来想在convertView里加判断，然后加载不一样的布局文件，虽然初始化数据加载没问题，但是一改布局就会出现重复的现象
+所以最终的方法是开始只加载一样的布局文件，然后在getview里获取到convertView后进行判定，添加background属性
