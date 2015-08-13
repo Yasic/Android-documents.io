@@ -1,0 +1,69 @@
+BroadCast
+广播机制顾名思义，就是广播发送者无需判断具体某个接收者的存在，把广播发送出去，任务即完成。
+这样保证了有效通信的同时又最大限度的降低了android系统各个模块的耦合性。
+
+广播分为发送器和接收器两部分。
+发送器分为普通广播和有序广播两种，有序广播按优先级被不同等级的接收器处理
+接收器分为静态接收器和动态接收器
+静态注册广播 - 在AndroidManifest.xml中设置，程序不用启动亦可接收。
+动态注册广播 - 代码中注册广播，程序未启动时，无法接收广播。
+
+1.普通广播示例
+发送器
+public void localCarGps_brodcast(String frompcmessage){
+        Intent localgps_brodcast_Intent = new Intent("CARMESSAGE_RECEIVER");//action为localgps_RECEIVER
+        localgps_brodcast_Intent.putExtra("LOCAL_MESSAGE",frompcmessage);
+        sendBroadcast(localgps_brodcast_Intent);//发送广播信息
+}
+
+接收器
+Servicebrodcast_receiver servicebrodcast_receiver;
+public void install_BrodcastReceiver(){
+        servicebrodcast_receiver = new Servicebrodcast_receiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("CARMESSAGE_RECEIVER");//添加Action
+        registerReceiver(servicebrodcast_receiver,intentFilter);//注册广播接收器
+        //去注销广播
+}
+
+public class Servicebrodcast_receiver extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String carMessage = intent.getStringExtra("LOCAL_MESSAGE");
+            //Log.i("Mainpage",carMessage);
+            dealmessage(carMessage);//处理报文信息
+        }
+}
+
+unregisterReceiver(servicebrodcast_receiver);//注销广播
+
+2.有序广播示例
+发送器
+public void chatMessage_brodcast(String frompcmessage){
+        Intent chatMessage_brodcast_Intent = new Intent("CHATMESSAGE_RECEIVER");
+        chatMessage_brodcast_Intent.putExtra("CHAT_MESSAGE",frompcmessage);
+        sendOrderedBroadcast(chatMessage_brodcast_Intent,null);
+}
+
+接收器
+private ServiceOrderBroadcast_Receiver serviceOrderBroadcast_receiver;
+public void install_OrderBrodcastReceiver(){
+        serviceOrderBroadcast_receiver = new ServiceOrderBroadcast_Receiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("CHATMESSAGE_RECEIVER");
+        intentFilter.setPriority(R.string.low_Priority);//低优先级
+        registerReceiver(serviceOrderBroadcast_receiver,intentFilter);//注册有序广播接收器
+        //去注销广播
+    }
+
+public class ServiceOrderBroadcast_Receiver extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context , Intent intent){
+            String chatMessage = intent.getStringExtra("CHAT_MESSAGE");
+            Log.i("chatMessage",chatMessage);
+            dealmessage(chatMessage);
+        }
+    }
+
+
+unregisterReceiver(serviceOrderBroadcast_receiver);//注销有序广播    
