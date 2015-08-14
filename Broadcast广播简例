@@ -65,5 +65,4 @@ public class ServiceOrderBroadcast_Receiver extends BroadcastReceiver{
         }
     }
 
-
 unregisterReceiver(serviceOrderBroadcast_receiver);//注销有序广播    
