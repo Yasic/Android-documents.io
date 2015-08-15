@@ -1,0 +1,7 @@
+java泛型编程实例：简单化findViewbyId代码
+
+private <T extends View> T $(int resId) { return (T) super.findViewById(resId); }
+
+mapView = $(R.id.map);
+与
+mapView = (MapView) findViewById(R.id.map);
