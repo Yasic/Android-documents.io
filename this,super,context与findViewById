@@ -1,0 +1,11 @@
+super.findViewById调用父类的findViewById方法，但是奇怪的是对于Activity的父类context也可以通过这个方法获得正确结果？
+
+this.findViewById调用本类的findviewbyid方法
+
+findViewById是view类下的方法，其他的findviewbyid也都是view的子类通过重写实现的
+Activity的findviewbyid实际上是getWindow().findViewById(id),返回一个window对象，而window对象是view对象的子类
+
+view.findViewByid()直接调用这个view对象的findviewbyid
+
+this.getApplicationContext()获取的是整个应用的context
+activity.this获取的是当前的context
