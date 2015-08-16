@@ -1,7 +1,11 @@
-java泛型编程实例：简单化findViewbyId代码
+java泛型编程实例：简化findViewbyId代码
 
-private <T extends View> T $(int resId) { return (T) super.findViewById(resId); }
+private <T extends View> T $(int resId) { return (T) findViewById(resId); }
+<T extends View>指定了类型参量的上限(必须是View或其子类)，相对应的super指定下限，必须是其父类
+第一个T指定了函数的返回值
+(T)findViewById(resId)就是真正的findViewById方法
 
+实例就是
 mapView = $(R.id.map);
 与
 mapView = (MapView) findViewById(R.id.map);
