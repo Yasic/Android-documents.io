@@ -3,7 +3,7 @@ BroadCast
 这样保证了有效通信的同时又最大限度的降低了android系统各个模块的耦合性。
 
 广播分为发送器和接收器两部分。
-发送器分为普通广播和有序广播两种，有序广播按优先级被不同等级的接收器处理
+发送器分为普通广播和有序广播两种，有序广播按优先级被不同等级的接收器处理，并且可以在某一级截获广播停止传播
 接收器分为静态接收器和动态接收器
 静态注册广播 - 在AndroidManifest.xml中设置，程序不用启动亦可接收。
 动态注册广播 - 代码中注册广播，程序未启动时，无法接收广播。
@@ -62,7 +62,10 @@ public class ServiceOrderBroadcast_Receiver extends BroadcastReceiver{
             String chatMessage = intent.getStringExtra("CHAT_MESSAGE");
             Log.i("chatMessage",chatMessage);
             dealmessage(chatMessage);
+            abortBroadcast ();//截获广播，禁止向下一级传播
         }
     }
 
 unregisterReceiver(serviceOrderBroadcast_receiver);//注销有序广播    
+
+注意：如果有序广播在某一级没有添加abortBroadcast ()，广播就会继续向优先级低的接收器传播。
