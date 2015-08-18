@@ -1,6 +1,3 @@
-今天实在太累了、就少写一些吧、明天考试结束、可以多写些东西了。
-预计将会先解决自定义view控件、查看手机存储图片、实现圆形头像绘制等功能，然后等到本月下旬再开展有关datagramsocket和udp通信的一系列东西。
-
 用shape实现控件圆角设置。步骤如下
 1.在drawable文件下新建一个文件“corner_xml”
 <?xml version="1.0" encoding="utf-8"?>
