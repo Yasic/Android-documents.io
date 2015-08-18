@@ -22,6 +22,17 @@
 
 这个方法有误，并不是每次都可以
 正确的方法还是应该加上判断语句，然后所有对convertview的操作都放到if语句外面执行
+if(convertView == null){
+            convertView = LayoutInflater.from(context).inflate(R.layout.noteitem_cardview,null);
+}
+viewholder = new ViewHolder();
+viewholder.notetitle = (TextView)convertView.findViewById(R.id.notetitle_cardview);
+viewholder.notebody = (TextView)convertView.findViewById(R.id.notebody_cardview);
+viewholder.notetime = (TextView)convertView.findViewById(R.id.notetime_cardview);
+viewholder.notetitle.setText(Note.title);
+viewholder.notebody.setText(Note.body);
+viewholder.notetime.setText(Note.time);
+return convertView;
 
 2.关于listview倒序排列的方法
 在listview中添加
