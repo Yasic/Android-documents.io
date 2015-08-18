@@ -81,3 +81,8 @@ while (cursor.moveToNext()) {
 8.关闭数据库
  helperinside.close();
 这是很重要的一步，执行完全部操作以后一定记得关闭数据库
+
+9.排序数据库
+desc：倒序
+asc：正序
+例子明天补充
