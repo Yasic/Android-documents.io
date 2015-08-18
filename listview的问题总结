@@ -20,6 +20,9 @@
 }
 去掉if判断语句，可以暂时保证没有乱序问题，但是感觉这个方法不太妥当。需要进一步研究。
 
+这个方法有误，并不是每次都可以
+正确的方法还是应该加上判断语句，然后所有对convertview的操作都放到if语句外面执行
+
 2.关于listview倒序排列的方法
 在listview中添加
 android:stackFromBottom="true"
