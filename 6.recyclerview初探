@@ -78,3 +78,28 @@ Fragone_recycler_adapter adapter = new Fragone_recycler_adapter(getActivity(),No
 recyclerview.setAdapter(adapter);
 这里要注意一点，这里是在fragment里面实现的recyclerview，如果需要得到fragment的context，要使用getActivity()方法才可以！
 其他都跟Activity一样
+
+5.关于recyclerview加载不同布局的例子
+需要复写一个方法getItemViewType()
+@Override
+public int getItemViewType(int position) {
+        return position;
+}
+然后在onCreateViewHolder中对viewType进行判断，从而加载不同布局
+@Override
+public ViewHolder onCreateViewHolder(ViewGroup viewGroup,int viewType){
+        View view = View.inflate(viewGroup.getContext(),R.layout.coloritem,null);//创建一个View,用到了自定义的布局
+        ViewHolder holder = new ViewHolder(view);//创建一个ViewHolder
+        holder.defaultText.setBackgroundResource(list.get(viewType));
+        return holder;
+}
+
+如果是直接在onBindViewHolder()中修改是无效的
+
+6.对于recyclerview的item布局
+线性布局LinearLayout不能决定item大小，即使固定线性布局长宽！
+
+7.设置水平显示问题，在recyclerview的布局文件中设置scrollview=horizontal无效
+必须在layoutmanager处设置
+LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
