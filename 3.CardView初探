@@ -81,3 +81,4 @@ android:foreground="?android:attr/selectableItemBackground"
 我在一个替换了部分LinearLayout的fragment布局中使用cardview时，开始在cardview中包含LinearLayout，宽度总是不能铺满父容器
 具体情况是，cardview会随着LinearLayout中最长的那个子view变化宽度
 将LinearLayout改成RelativeLayout则问题解决
+更新：最好在修改背景颜色时内嵌一个view，直接对cardview操作背景颜色会去掉细节渲染（圆角阴影之类）
