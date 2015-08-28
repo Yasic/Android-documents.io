@@ -85,4 +85,5 @@ while (cursor.moveToNext()) {
 9.排序数据库
 desc：倒序
 asc：正序
-例子明天补充
+Cursor cursor = h.getReadableDatabase().query("notetable",null,null,null,null,null,"time DESC");
+//以属性值“time”的值倒序排列并赋予cursor
