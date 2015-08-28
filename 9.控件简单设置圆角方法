@@ -8,9 +8,13 @@
         android:topRightRadius="5dp"
         android:bottomRightRadius="0dp"
         android:bottomLeftRadius="0dp"/>
+    <stroke
+        android:width="1dp"
+        android:color="#CCCCCC" />
 </shape>
 solid表示填充颜色、也就是将作为控件背景的颜色；
 corners表示圆角，依次是上左、上右、下左、下右角、值越大圆角越明显、5dp已经很适合一般的圆角要求了
+stroke表示边框线宽度和颜色
 <corners android:radius="5dp" /> 也可以简单设定四个角一样的属性
 2.直接在控件里设定background为corner_xml就可以了
  
