@@ -1,0 +1,219 @@
+Dialog对话框自定义布局
+
+1.建立style文件
+<style name="notebookDialog" parent="android:style/Theme.Dialog">
+    <!-- 背景颜色及透明程度 -->
+    <item name="android:windowBackground">@android:color/transparent</item>
+    <!-- 是否有标题 -->
+    <item name="android:windowNoTitle">true</item>
+    <!-- 是否浮现在activity之上 -->
+    <item name="android:windowIsFloating">true</item>
+    <!-- 是否模糊 -->
+    <item name="android:backgroundDimEnabled">false</item>
+    <item name="android:windowFrame">@null</item>
+</style>
+
+2.建立自定义布局文件
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/corners_xml">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:text="Create a New Notebook"
+        android:gravity="center_vertical|left"
+        android:paddingLeft="7dp"
+        android:textSize="21dp"
+        android:textColor="#545454"/>
+    <EditText
+        android:id="@+id/notebookdialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:hint="Title"
+        android:textSize="18dp"
+        android:background="@null"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/cornor_stroke"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"/>
+    <EditText
+        android:id="@+id/notebookdialog_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:hint="Description"
+        android:textSize="18dp"
+        android:background="@null"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/cornor_stroke"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginTop="7dp">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/notebookdialog_ColorRecyclerView"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/notebookdialog_cancelbutton"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="7dp"
+            android:text="cancel"
+            android:textAllCaps="false"
+            android:textSize="16dp"
+            android:gravity="center"
+            android:background="@drawable/corners_xml"/>
+        <Button
+            android:id="@+id/notebookdialog_okbutton"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="7dp"
+            android:text="ok"
+            android:textAllCaps="false"
+            android:gravity="center"
+            android:background="@drawable/corners_xml"/>
+    </LinearLayout>
+</LinearLayout>
+
+3.自定义dialog类
+public class NotebookDialog extends Dialog implements View.OnClickListener {
+
+    Context context;
+    Button notebookdialog_cancelbutton;
+    Button notebookdialog_okbutton;
+    NotebookDialog_setting DialogListener = null;
+    EditText notebookdialog_title;
+    EditText notebookdialog_description;
+    public NotebookDialog(Context context,int theme) {
+        super(context, theme);
+        this.context = context;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        this.setContentView(R.layout.notebookdialog);
+        initColorList();
+        initbutton();
+        initedittext();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.notebookdialog_okbutton:
+                if(DialogListener != null){
+                    DialogListener.onSetting(notebookdialog_title.getText().toString(),notebookdialog_description.getText().toString());
+                    dismiss();
+                }
+                break;
+            case R.id.notebookdialog_cancelbutton:
+                dismiss();
+                break;
+        }
+    }
+
+    private void initColorList(){
+        RecyclerView notebookdialog_ColorRecyclerView = (RecyclerView)findViewById(R.id.notebookdialog_ColorRecyclerView);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        notebookdialog_ColorRecyclerView.setLayoutManager(layoutManager);
+        List Colorlist = new ArrayList<Integer>();
+        Getcolors getcolors = new Getcolors();
+        for(int i = 0;i < getcolors.getColorCount();i++){
+            Colorlist.add(i);
+        }
+        final ColorRecyclerview_adapter colorRecyclerview_adapter = new ColorRecyclerview_adapter(getContext(),Colorlist);
+        notebookdialog_ColorRecyclerView.setAdapter(colorRecyclerview_adapter);
+    }
+
+    private void initbutton(){
+        notebookdialog_cancelbutton = (Button)findViewById(R.id.notebookdialog_cancelbutton);
+        notebookdialog_cancelbutton.setOnClickListener(this);
+        notebookdialog_okbutton = (Button)findViewById(R.id.notebookdialog_okbutton);
+        notebookdialog_okbutton.setOnClickListener(this);
+    }
+
+    private void initedittext(){
+        notebookdialog_title = (EditText)findViewById(R.id.notebookdialog_title);
+        notebookdialog_description = (EditText)findViewById(R.id.notebookdialog_description);
+    }
+
+    public void setOnNotebookDialogListener(NotebookDialog_setting listener) {
+        DialogListener = listener;
+    }
+}
+
+4.在自定义类中实现dialog与activity的通信
+实现一个抽象接口，activity继承并实现这个接口，然后dialog中设置监听事件，调用抽象接口的方法，从而将数据传递给activity
+具体如下
+a.接口定义
+package com.example.esir.enotepad;
+/**
+ * Created by ESIR on 2015/8/29.
+ */
+public interface NotebookDialog_setting {
+    public void onSetting(String notebook_title,String notebook_description);
+}
+b.activty中接口实现
+...implements NotebookDialog_setting
+@Override
+public void onSetting(String notebook_title, String notebook_description) {
+        Toast.makeText(getActivity(),"title:"+notebook_title+"\n"+"description:"+notebook_description,Toast.LENGTH_LONG).show();
+} 
+c.dialog中接口调用
+NotebookDialog_setting DialogListener = null;
+public void setOnNotebookDialogListener(NotebookDialog_setting listener) {
+        DialogListener = listener;
+    }
+@Override
+public void onClick(View v) {
+    switch (v.getId()){
+            case R.id.notebookdialog_okbutton:
+                if(DialogListener != null){
+                    DialogListener.onSetting(notebookdialog_title.getText().toString(),notebookdialog_description.getText().toString());
+                    dismiss();
+                }
+                break;
+            case R.id.notebookdialog_cancelbutton:
+                dismiss();
+                break;
+    }
+}
+d.在acitivity中开启对话框
+NotebookDialog notebookDialog = new NotebookDialog(getActivity(), R.style.notebookDialog);
+notebookDialog.setOnNotebookDialogListener(Fragment2.this);
+notebookDialog.show();
