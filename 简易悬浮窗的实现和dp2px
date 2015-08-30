@@ -1,6 +1,10 @@
 悬浮窗口能悬浮在手机桌面甚至是所有的应用界面之上，因为悬浮窗口不隶属于任何的Activity界面，只隶属于所在进程。
 一般的实现过程是利用service建立一个长生命周期的service用来维护悬浮窗，主要利用到WindowManager接口。
 
+首先加上权限：
+<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+<uses-permission android:name="android.permission.GET_TASKS" />
+
 基本步骤:
 1.建立float_window.xml布局文件
 <?xml version="1.0" encoding="UTF-8"?>
