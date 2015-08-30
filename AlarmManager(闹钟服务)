@@ -1,0 +1,25 @@
+AlarmManager(闹钟服务)是个全局定时器，可以实现固定时间后或重复时间段后开启一个Activity、Broadcast、Service
+
+单次闹钟基本实现步骤
+
+1.获取系统权限
+AlarmManager alarmManager = (AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
+
+2.生成intent
+Intent intent = new Intent(getActivity(),ReminderAlarm_Service.class);
+
+3.生成PendingIntent
+开启service:
+PendingIntent reminderPendingIntent = PendingIntent.getService(getActivity(),0,intent,0);
+开启activity:
+PendingIntent reminderPendingIntent = PendingIntent.getActivity(getActivity(), 0, intent, 0);
+开启Broadcast:
+PendingIntent reminderPendingIntent = PendingIntent.getBroadcast(getActivity(), 0, intent, 0);
+
+4.设置Calendar时间
+Calendar setReminderTime = Calendar.getInstance();
+setReminderTime.setTime(date);//这里是date与calendar转换函数
+
+5.启动AlarmManager
+alarmManager.set(AlarmManager.RTC_WAKEUP,setReminderTime.getTimeInMillis(), reminderPendingIntent);
+
