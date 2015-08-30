@@ -1,0 +1,15 @@
+在某些少数情况下，我们需要启动一个没有界面的activity（或者说不显示界面的activity）。
+
+android提供了这样的主题了，@android:style/Theme.NoDisplay 
+
+1.在ManiFest文件中作了如下设定：
+android:theme="@android:style/Theme.NoDisplay"
+
+2.设置子 activity 不显示界面：
+<activity
+android:name="com.learns.LocationManager"
+android:theme="@android:style/Theme.NoDisplay"
+>
+</activity>
+
+问题是虽然没有了界面但是activity启动后依然会占用屏幕，只有按返回键才可以回到系统下的界面。
