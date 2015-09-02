@@ -1,0 +1,8 @@
+情景：直接用默认签名通过IED将app安装到手机后，不能再用apk安装应用，报错信息：签名冲突
+
+解决方法：
+1.卸载原app
+2.在Settings->Apps里，划到最下部找到原app图标，显示为“not installed”
+3.点击进入，点击右上角settings
+4.选择“uninstall for all users”
+5.安装apk文件、it should work!
