@@ -1,0 +1,28 @@
+还是要记录一下，关于调用部分系统服务的方法
+1.打开设置界面
+Intent intent = new Intent(Settings.ACTION_SETTINGS);
+intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+startActivity(intent);
+
+可以在Setting包里找到其他接口
+
+2.打开系统相机
+Intent intent=new Intent();
+intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+intent.addCategory(Intent.CATEGORY_DEFAULT);
+intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+startActivity(intent);
+
+3.打开短信列表
+Intent intent = new Intent(Intent.ACTION_MAIN);
+intent.setType("vnd.android-dir/mms-sms");
+intent.addCategory(Intent.CATEGORY_DEFAULT);
+intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+startActivity(intent);
+
+如果第一句使用Intent.ACTION_VIEW,则进入新建信息界面
+
+4.打开拨号界面
+Intent intent = new Intent(Intent.ACTION_DIAL);
+intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+startActivity(intent);
