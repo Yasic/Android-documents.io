@@ -26,3 +26,12 @@ startActivity(intent);
 Intent intent = new Intent(Intent.ACTION_DIAL);
 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 startActivity(intent);
+
+5.打开浏览器搜索特定内容
+Uri uri = null;
+uri = Uri.parse("http://www.baidu.com"+"/s?wd="+urltag);//百度搜索
+uri = Uri.parse("http://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q="+urltag);//谷歌搜索
+uri = Uri.parse("http://www.bing.com/search?q="+urltag);//Bing搜索
+Intent itent = new Intent(Intent.ACTION_VIEW,uri);
+itent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+startActivity(itent);
