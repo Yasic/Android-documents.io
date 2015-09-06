@@ -1,0 +1,4 @@
+the view which is going to be animated must not be directly added to the top window, because top window of android is not a real ViewGroup. so the view must be added to a ViewGroup like FrameLayout first and then this ViewGroup be added to the top window.
+
+在悬浮窗应用中，android4.4以下版本有一个问题，不可以直接对父容器添加动画，否则不予显示。
+所以在添加动画时对象选择为子容器就可以解决这个问题。
