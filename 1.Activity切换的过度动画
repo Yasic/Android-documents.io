@@ -31,3 +31,5 @@ R.anim.slede_left_out_animation
     android:toYDelta="0.0%" />
 
 最后说明：有时候打开应用运行到这一步时，切出动画并不能出现，切入动画依旧正常，原因不明。
+
+一个记录：当动画效果添加后立即进行timer延迟操作会使动画无效
