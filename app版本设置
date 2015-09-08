@@ -1,0 +1,6 @@
+Android Studio要在build.gradle里设置，在Manifest里设置无效
+
+VersionCode给系统查看，必须是整数
+VersionName给用户看，字符串
+
+困扰了很久的问题、、终于成功了！！
