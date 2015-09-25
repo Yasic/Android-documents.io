@@ -1,0 +1,11 @@
+TextView tempname = (TextView)listView.getChildAt(position).findViewById(R.id.messageitem_name);
+JinyiSQLite_dbhelper jinyiSQLite_dbhelper = new JinyiSQLite_dbhelper(getApplicationContext(),"JINYICHAT_DB",1);
+Cursor cursor = jinyiSQLite_dbhelper.getReadableDatabase().query("JINYICHAT",
+        new String[]{"MESSAGE"},
+        "NAME = ?",
+        new String[]{tempname.getText().toString()},
+        null,null,"TIME ASC");
+while (cursor.moveToNext()){
+    jinyiSQLite_dbhelper.getWritableDatabase().delete("JINYICHAT","NAME = ?",new String[]{tempname.getText().toString()});
+}
+jinyiSQLite_dbhelper.close();
