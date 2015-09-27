@@ -1,0 +1,7 @@
+/*set it to be no title*/ 
+requestWindowFeature(Window.FEATURE_NO_TITLE); 
+/*set it to be full screen*/ 
+getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,    
+WindowManager.LayoutParams.FLAG_FULLSCREEN); 
+
+注意如果原本style里使用的主题就不含有titlebar，则第一句代码必须省略
