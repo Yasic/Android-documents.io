@@ -1,7 +1,4 @@
-package com.example.esir.jinyicarapp;
-
-import android.graphics.Bitmap;
-
+1.FastBlur算法
 public class FastBlur {
     public static Bitmap doBlur(Bitmap sentBitmap, int radius,
                                 boolean canReuseInBitmap) {
@@ -211,3 +208,56 @@ public class FastBlur {
         return (bitmap);
     }
 }
+
+2.具体使用
+Thread newThread;
+        new Thread() {
+            @Override
+            public void run() {
+                imgblurs();
+            }
+        }.start();
+        
+public void imgblurs(){
+        ImageView image = (ImageView)findViewById(R.id.jinyilogo);
+        image.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+
+            @Override
+            public boolean onPreDraw() {
+                ImageView image = (ImageView)findViewById(R.id.jinyilogo);
+                image.getViewTreeObserver().removeOnPreDrawListener(this);
+                image.buildDrawingCache();
+                Bitmap bmp = image.getDrawingCache();
+                blurs(bmp, image);
+                return true;
+            }
+        });
+        ImageView iv = (ImageView)findViewById(R.id.jinyilogo);
+        blurs(bitmap, iv);
+    }
+
+    public void blurs(Bitmap bitmap,View view){
+        //long startMs = System.currentTimeMillis();
+        float scaleFactor = 1;//图片缩放比例；
+        float radius = 20;//模糊程度
+
+        Bitmap overlay = Bitmap.createBitmap(
+                (int)(view.getMeasuredWidth()),
+                (int)(view.getMeasuredHeight()),
+                Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(overlay);
+        canvas.translate(-view.getLeft() / scaleFactor, -view.getTop()/ scaleFactor);
+        canvas.scale(1 / scaleFactor, 1 / scaleFactor);
+        Paint paint = new Paint();
+        paint.setFlags(Paint.FILTER_BITMAP_FLAG);
+        canvas.drawBitmap(bitmap, 0, 0, paint);
+
+        overlay = FastBlur.doBlur(overlay, (int) radius, true);
+        view.setBackground(new BitmapDrawable(getResources(), overlay));
+
+    }
+    
+3.说明
+a.因为高斯模糊过程较费事，尤其是模糊比例变大时，所以最好开个异步线程进行操作
+b.缩放比例本身是可以提高高斯模糊效率的方法，但是会按比例缩小原图
