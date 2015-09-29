@@ -1,0 +1,27 @@
+1.建立values-v19文件夹
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="@style/BaseAppTheme">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+</resources>
+windowTranslucentStatus可以让我们操纵statusbar
+
+2.在布局文件中添加一个任意view
+<TextView
+        android:id="@+id/contentView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#3399ff"
+/>
+当然这个View的目的是为了占据顶部statusbar的位置，从而可以任意实现状态栏的颜色
+
+3.现在需要获取status的高度然后设置view高度
+ViewGroup contentView = (ViewGroup) MainActivity.this.findViewById(android.R.id.content);
+TextView contentview = (TextView)findViewById(R.id.contentView);
+contentview.setHeight(contentView.getHeight()+dp2pix(16));
+
+4.之所以设置加16dp，是为了显示时不会过于靠近，16dp比较合适
+
+
+这个方案适用于没有Toolbar的activity或者任何activity均可使用
