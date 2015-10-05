@@ -1,0 +1,28 @@
+利用程序动态捕捉textview的行数然后将前三行取出后面添加省略号
+
+1.textview的xml文件如下：
+<TextView
+                android:singleLine="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+关键是layout_height设为wrap_content
+
+2.控制代码：
+tv.setText(...);
+public void setLines(final TextView tv){
+        ViewTreeObserver viewTreeObserver = tv.getViewTreeObserver();
+        viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if(tv.getLineCount() > 3){
+                    int length = tv.getText().length();
+                    int lineIndex = tv.getLayout().getLineStart(3);
+                    String text = tv.getText().toString().substring(0,lineIndex-3) + "..." ;
+                    tv.setText(text);
+                }
+            }
+        });
+    }
+
+这里很奇怪getLineStart方法参数取0长度就是0，而getLineEnd方法参数取0则长度是最后一行长度，所以在取前三行时参数取3.
