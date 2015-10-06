@@ -9,3 +9,7 @@ final LinearLayout rootView = (LinearLayout)findViewById(R.id.noteedit_rootview)
                 int heightDifference = screenHeight - (rect.bottom);//软键盘高度
             }
         });
+        
+2.获取edittext的父节点，设置padding属性
+LinearLayout editTextOutsideView = (LinearLayout)findViewById(R.id.edittext_outsideview);
+editTextOutsideView.setPadding(0,0,0,heightDifference);
