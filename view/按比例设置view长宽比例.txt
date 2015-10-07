@@ -1,0 +1,25 @@
+按比例设置一个view的长宽比主要需要覆写onMeasure方法
+
+public class ImageLinearLayout extends LinearLayout {
+    public ImageLinearLayout(Context context) {
+        super(context);
+    }
+
+    public ImageLinearLayout(Context context,AttributeSet attrs){
+        super(context , attrs);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        setMeasuredDimension(getDefaultSize(0,widthMeasureSpec),getDefaultSize(0,heightMeasureSpec));
+
+        int childWidthSize = getMeasuredWidth();
+        int childHeightSize ;
+        childHeightSize = (childWidthSize * 3/5);
+        widthMeasureSpec = MeasureSpec.makeMeasureSpec(childWidthSize,MeasureSpec.EXACTLY);
+        heightMeasureSpec = MeasureSpec.makeMeasureSpec(childHeightSize,MeasureSpec.EXACTLY);
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
+}
+
+注意widthMeasureSpec, heightMeasureSpec没有比例关系，也不代表实际物理长度，所以不能直接操纵。
