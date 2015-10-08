@@ -1,0 +1,41 @@
+EditText的号码自动添加空格主要用了TextWatcher接口
+
+loginEtPhone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (count == 1){
+                    int length = s.toString().length();
+                    if (length == 3 || length == 8){
+                        loginEtPhone.setText(s + " ");
+                        loginEtPhone.setSelection(loginEtPhone.getText().toString().length());
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+解释一下，TextWatcher中的三个函数作用分别是
+
+1.public abstract void beforeTextChanged (CharSequence s, int start, int count, int after) :
+
+This method is called to notify you that, within s, the count characters beginning at start are about to be replaced by new text with length after. It is an error to attempt to make changes to s from this callback.
+在字符串s内,从索引为start(包含)的字符开始的count个字符将被长度为after的新文本代替
+
+2.public abstract void onTextChanged (CharSequence s, int start, int before, int count)
+
+This method is called to notify you that, within s, the count characters beginning at start have just replaced old text that had length before. It is an error to attempt to make changes to s from this callback.
+在字符串s内,从索引为start(包含)的字符开始count个字符刚刚替换了长度为before的旧字符
+
+3.public abstract void afterTextChanged (Editable s)
+
+This method is called to notify you that, somewhere within s, the text has been changed. It is legitimate to make further changes to s from this callback, but be careful not to get yourself into an infinite loop, because any changes you make will cause this method to be called again recursively. (You are not told where the change took place because other afterTextChanged() methods may already have made other changes and invalidated the offsets. But if you need to know here, you can use setSpan(Object, int, int, int) in onTextChanged(CharSequence, int, int, int) to mark your place and then look up from here where the span ended up.
+字符串s内容已经发生了变化.可以在这一步对s进行合理的变更,但是要注意不要进入无限循环,因为字符串的任何变化都会再次递归调用此回调方法.在这个方法中不会告诉你字符串哪些内容发生了变化,因为其他针对字符串的改变已经调用了afterTextChanged() .如果你想知道哪些发生了变化,可以在 onTextChanged(CharSequence, int, int, int) 使用 setSpan(Object, int, int, int) 做标记.
