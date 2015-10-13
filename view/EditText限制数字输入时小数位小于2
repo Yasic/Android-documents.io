@@ -1,0 +1,27 @@
+1.EditText属性添加
+android:inputType="numberDecimal"
+android:numeric="decimal"
+
+2.在addTextChangedListener中的afterTextChanged中进行判断
+postrequestEtAward.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String temp = s.toString();
+                int posDot = temp.indexOf(".");
+                if (posDot <= 0) return;
+                if (temp.length() - posDot - 1 > 2)//如果小数点后的长度超过2则将新添加的3，4位数字delete
+                {
+                    s.delete(posDot + 3, posDot + 4);
+                }
+            }
+        });
