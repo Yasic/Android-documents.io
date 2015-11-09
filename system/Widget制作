@@ -1,0 +1,58 @@
+步骤如下，注意widget不可以加入自定义view，只支持少数的系统控件，如果想实现，需要用到framework层
+
+1.在res/目录下创建 XML 文件夹 下建立一个 appwidget-provider.xml 文件。
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="294dp"
+    android:minHeight="472dp"
+    android:updatePeriodMillis="86400000"
+    android:initialLayout="@layout/test"
+    >
+</appwidget-provider>
+
+2.在res/layout/目录下建立一个test.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="150dp"
+    android:layout_height="120dp"
+    android:orientation="vertical">
+    <com.tesmple.chromeprocessbar.Views.MIUITimeView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/btn_prve_widget"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="上一条" />
+    <TextView
+        android:id="@+id/textview_info_widget"
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:text="笑话载入中..."
+        android:gravity="center" />
+    <Button
+        android:id="@+id/btn_next_widget"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="下一条" />
+</LinearLayout>
+
+3.继承并实现AppWidgetProvider 
+public class MIUITimeWidgetProvider extends AppWidgetProvider {
+    @Override
+    public void onUpdate(Context context,AppWidgetManager appWidgetManager,int[] appWidgetIds){
+        super.onUpdate(context,appWidgetManager,appWidgetIds);
+    }
+}
+
+4.AndroidManifest.xml中配置
+<receiver
+            android:label="添加桌面控件"
+            android:name=".AppWidgetProvider.MIUITimeWidgetProvider" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/appwidget_provider_miuitime" />
+        </receiver>
