@@ -1,0 +1,74 @@
+每一个app在手机中运行时获得的内存是有限的，而内存占用最容易变成庞然大物的则是图片，事实上每当我们向一个view或者说imageview设置加载图片时都应当考虑我们是否对图片做了正确的处理和回收策略，最常见的便是对图片进行压缩，从而不必在小范围的显示区域内显示过大的图片，那是对内存的浪费。
+public class SimpleImageViewUtil {
+
+    private Context context;
+
+    public SimpleImageViewUtil(Context context){
+        this.context = context;
+    }
+
+    public static Bitmap getFitSampleBitmap(Resources resources, int resId, int width, int height){ //获得合适的bitmap资源
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true; // 仅将图像相关的参数填充到option对象中
+        BitmapFactory.decodeResource(resources, resId, options);//从资源文件中获得目标图片，getResources()
+        options.inSampleSize = getFitInSampleSize(width, height, options);//设置合适的缩放值
+        options.inJustDecodeBounds = false;//加载图像及相关参数
+        return BitmapFactory.decodeResource(resources,resId, options);//加载图片
+    }
+
+    public static int getFitInSampleSize(int requestWidth, int requestHeight, BitmapFactory.Options options){//获得合适的缩放值
+        int inSampleSize = 1;
+        if (options.outWidth > requestWidth || options.outHeight > requestHeight){//对读入的图片宽高属性和显示view的宽高进行比较，得到缩放值
+            int widthRatio = Math.round((float)options.outWidth / (float) requestWidth);
+            int heightRatio = Math.round((float)options.outHeight / (float)requestHeight);
+            inSampleSize = Math.min(widthRatio, heightRatio);
+        }
+        Log.i("inSample", String.valueOf(inSampleSize) + " " + options.outWidth + " " + options.outHeight + " " + requestWidth + " " + requestHeight);
+        return inSampleSize;
+    }
+
+
+    public int dp2pix(int dp){
+        float scale = context.getResources().getDisplayMetrics().density;
+        int pix = (int) (dp * scale + 0.5f);
+        return pix;
+    }
+
+    public int pix2dp(int pix){
+        float scale = context.getResources().getDisplayMetrics().density;
+        int dp = (int) (pix/scale + 0.5f);
+        return dp;
+    }
+
+}
+
+注意一点，request值如果是直接获取view的值则很容易会因view没有进行onMearsure而返回0
+解决方法如下
+//------------------------------------------------方法一
+int w = View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED);
+int h = View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED);
+imageView.measure(w, h);
+int height =imageView.getMeasuredHeight();
+int width =imageView.getMeasuredWidth();
+textView.append("\n"+height+","+width);
+
+//-----------------------------------------------方法二
+ViewTreeObserver vto = imageView.getViewTreeObserver();
+vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+    public boolean onPreDraw() {
+        int height = imageView.getMeasuredHeight();
+        int width = imageView.getMeasuredWidth();
+        textView.append("\n"+height+","+width);
+        return true;
+    }
+});
+
+//-----------------------------------------------方法三   
+ViewTreeObserver vto2 = imageView.getViewTreeObserver();  
+vto2.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+    @Override  
+    public void onGlobalLayout() {
+    	imageView.getViewTreeObserver().removeGlobalOnLayoutListener(this);  
+        textView.append("\n\n"+imageView.getHeight()+","+imageView.getWidth());
+    }  
+});  
