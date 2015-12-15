@@ -1,0 +1,29 @@
+解决方法如下
+//------------------------------------------------方法一
+int w = View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED);
+int h = View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED);
+imageView.measure(w, h);
+int height =imageView.getMeasuredHeight();
+int width =imageView.getMeasuredWidth();
+textView.append("\n"+height+","+width);
+
+//-----------------------------------------------方法二
+ViewTreeObserver vto = imageView.getViewTreeObserver();
+vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+    public boolean onPreDraw() {
+        int height = imageView.getMeasuredHeight();
+        int width = imageView.getMeasuredWidth();
+        textView.append("\n"+height+","+width);
+        return true;
+    }
+});
+
+//-----------------------------------------------方法三   
+ViewTreeObserver vto2 = imageView.getViewTreeObserver();  
+vto2.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+    @Override  
+    public void onGlobalLayout() {
+    	imageView.getViewTreeObserver().removeGlobalOnLayoutListener(this);  
+        textView.append("\n\n"+imageView.getHeight()+","+imageView.getWidth());
+    }  
+});  
