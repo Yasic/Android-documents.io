@@ -1,0 +1,83 @@
+单例模式实现方式(推荐方法3和4)：
+1.饿汉模式
+public class CEO extends Staff{
+	private static final CEO mCeo = new CEO();
+	private CEO(){}
+	public static CEO getCeo(){
+	return mCeo;
+}
+}
+构造方法私有化，使得外部程序不能通过构造函数来构造CEO对象，只能通过一个静态方法获得静态对象，保证对象的唯一性
+
+2.懒汉模式
+public class Singleto{
+	private static Singleton instance;
+	private Singleton(){}
+	public static synchronized Singleton getInstance(){
+	if(instance == null){
+		instance = new Singleton();
+	}
+	return instance;
+}
+}
+在getinstance方法前添加synchronized关键字可以保证单例对象的唯一性，因为在同一时间内类中只会有一个方法被调用，但每次同步都会消耗资源，影响效率。
+
+3.Double CheckLock(DCL)实现单例
+public class Singleton{
+	private static Singleton sInstance = null;
+	private Singleton(){}
+	public void doSomething(){
+
+	}
+	public static Singleton getInstance(){
+		if(sInstance == null){
+			synchronized (Singleton.class){
+				if(sInstance == null){
+					sInstance = new Singleton();
+				}
+			}
+		}
+		return sInstance;
+	}
+}
+getinstance方法中对instance进行了两次判定，第一层为了避免不必要的同步，第二层为了在null的情况下创建实例。
+对于new Singleton()方法，在汇编语句上将实现以下步骤：
+(1)给Singleton的实例分配内存；
+(2)调用Singleton()的构造函数，初始化成员字段
+(3)将sInstance对象指向分配的内存空间(此时sInstance不是null)
+但是在JDK1.5之前的版本不能保证第二三步的顺序执行，所以会出现还未调用构造函数或者初始化成员字段就给sInstance指向内存空间，随后跳转线程导致程序错误。
+如果是JDK1.5以后的版本，可以将sInstance定义为private volative static Singleton sInstance = null就可以保证不会出现上述情况。
+DCL方法优点是资源利用高，缺点是第一次加载会反应慢，在高并发下有一定缺陷，另外实现上不够优雅。
+
+4.静态内部类单例模式
+public class Singleton{
+	private Singleton(){}
+	public static Singleton getInstance(){
+		return SingletonHolder.sInstance;
+	}
+
+	/**
+	* 静态内部类
+	*/
+	private static class SingletonHolder{
+		private static final Singleton sInstance = new Singleton();
+	}
+}
+第一次加载Singleton类时不会初始化instance，只有在调用getinstance时会初始化，可以保证线程安全，也可以保证单例对象的唯一性，同时有延迟初始化的作用。
+
+
+5.容器实现单例模式
+public class Singleton{
+	private static Ma<String, Object> objectMap = new HashMap<String, Object>();
+
+	private Singleton(){}
+	public static void registerService(String key, Objectinstance){
+		if(!objectMap.containsKey(key)){
+			objectMap.put(key, instance);
+		}
+	}
+	public static Objectinstance(String key){
+		return objectMap.get(key);
+	}
+}
+程序初始时将多个单例类型注入map中，使用时从中获取，可以管理多种类型的单例，通过统一接口进行获取操作，降低了耦合度和使用成本。
