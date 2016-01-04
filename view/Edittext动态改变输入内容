@@ -1,0 +1,33 @@
+1.继承PassowrdTransfromationMethod，对于输入内容动态改变
+public class ChangeInputTransformationMethod extends PasswordTransformationMethod {
+    @Override
+    public CharSequence getTransformation(CharSequence source, View view) {
+        return new PasswordCharSequence(source);
+    }
+
+    private class PasswordCharSequence implements CharSequence {
+        private CharSequence mSource;
+
+        public PasswordCharSequence(CharSequence source) {
+            mSource = source; // Store char sequence
+        }
+
+        public char charAt(int index) {
+            if (mSource.charAt(index)=='a'){
+                return 'z';
+            }
+            return '$'; // This is the important part
+        }
+
+        public int length() {
+            return mSource.length(); // Return default
+        }
+
+        public CharSequence subSequence(int start, int end) {
+            return mSource.subSequence(start, end); // Return default
+        }
+    }
+}
+
+2.设置edittext
+etEditText.setTransformationMethod(new ChangeInputTransformationMethod());
