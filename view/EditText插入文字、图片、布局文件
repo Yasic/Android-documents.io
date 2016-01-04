@@ -1,0 +1,30 @@
+在EditText中插入图片、文字或者布局文件时主要使用到SpannableString数据类型和ImageSpan类
+三者加入的方法大同小异，这里主要描述如何加入布局文件，采用的方法是加载自定义布局后对自定义布局作一定处理然后转化成bitmap再加入。
+
+1.加载布局文件并做处理
+LayoutInflater layoutInflater = LayoutInflater.from(this);
+View view = layoutInflater.inflate(R.layout.layout_edittextinsertimg, null);
+ImageView ivInsertImg = (ImageView)view.findViewById(R.id.iv_insertimg);
+Bitmap bitmap1 = simpleImageViewUtil.getFitSampleBitmap(
+                getResources(),
+                R.drawable.cardslideview_img4,
+                200, 300);
+ivInsertImg.setImageBitmap(bitmap1);
+
+2.转化布局文件为bitmap
+view.setDrawingCacheEnabled(true);
+view.measure(View.MeasureSpec.makeMeasureSpec(1000, View.MeasureSpec.EXACTLY),
+	View.MeasureSpec.makeMeasureSpec(256, View.MeasureSpec.EXACTLY));
+view.layout(0, 0, simpleImageViewUtil.dp2pix(width) - 100, view.getMeasuredHeight());
+view.buildDrawingCache();
+Bitmap bitmap = view.getDrawingCache();
+
+3.加入到EditText
+SpannableString ss = new SpannableString("<img img>");
+ImageSpan imageSpan = new ImageSpan(this, bitmap, ImageSpan.ALIGN_BASELINE);
+ss.setSpan(imageSpan, 0, ("<img img>").length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+Editable editable = etEditText.getText();//获得文本内容
+int index =  etEditText.getSelectionStart();//获得光标所在位置
+editable.insert(index,ss);
+//editable.append(ss);
+
